@@ -29,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
 	void Movement ()
 	{
-		float hInputValue = Input.GetAxis("Horizontal");
-		float vInputValue = Input.GetAxis("Vertical");
+		float hInputValue = Input.GetAxis(hInput);
+		float vInputValue = Input.GetAxis(vInput);
 		Vector3 movement;
 		if (useInertia)
 		{
