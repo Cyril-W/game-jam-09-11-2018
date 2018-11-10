@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 			if (accel.sqrMagnitude > moveSpeed * moveSpeed)
 				accel = accel.normalized * acceleration;
 
-			rigid.AddForce(accel, ForceMode.Acceleration);
+			rigid.AddForce(accel * Time.fixedDeltaTime, ForceMode.Acceleration);
 		}
 		else
 		{
