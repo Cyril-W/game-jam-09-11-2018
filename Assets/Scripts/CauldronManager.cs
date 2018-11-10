@@ -15,12 +15,22 @@ public class CauldronManager : MonoBehaviour
 		{
 			Debug.Log("Good Ingredient put inside !");
 			//ADD FEEDBACK HERE
-			index++;
+			if(index < RecipeManager.instance.currentRecipeSize)
+			{
+				index++;
+			}
+			else
+			{
+				Debug.Log("Recipe complete !");
+				RecipeManager.instance.IncreaseRecipeSize(true);
+			}
 		}
 		else
 		{
 			Debug.Log("Bad Ingredient put inside !");
 			CurseManager.instance.CurseAllPlayers(ingredient.curseType);
+			RecipeManager.instance.GenerateRandomRecipe();
+			index = 0;
 		}
 	}
 	

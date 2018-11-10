@@ -809,6 +809,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &944652330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1613337829282498, guid: f97fdb58dfb20d942ac532b7e3f24832,
+    type: 2}
+  m_PrefabInternal: {fileID: 1984432981}
+--- !u!114 &944652335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944652330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aaf69ebcaf14d040bd7d6752252b6e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRecipeSize: 3
+  recipeSizeIncByLevel: 1
+  colorAmount: 4
 --- !u!224 &1003598606 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224587521666807682, guid: 2e078495dc2f1d044a0f0b8090dd3dc5,
