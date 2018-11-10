@@ -18,6 +18,13 @@ public class PickupFall : MonoBehaviour {
     [SerializeField] AnimationCurve curveY;
     [SerializeField] AnimationCurve curveZ;
 
+    [Space]
+
+    [SerializeField] GameObject glassJar;
+    [SerializeField] AudioSource breakGlassAudioSource;
+    [SerializeField] int numbersToEmit = 30;
+    [SerializeField] ParticleSystem particlesGlass;
+
     void Start () {
         target.localScale = Vector3.zero;
         target.gameObject.SetActive(true);
@@ -51,5 +58,8 @@ public class PickupFall : MonoBehaviour {
         }
 
         target.gameObject.SetActive(false);
+        particlesGlass.Emit(numbersToEmit);
+        glassJar.SetActive(false);
+        breakGlassAudioSource.PlayOneShot(breakGlassAudioSource.clip);
     }
 }

@@ -13,11 +13,11 @@ public class CurseManager : MonoBehaviour
 		Debug.Log("Player " + player.name + " cursed with " + curse.ToString());
         switch (curse)
         {
-              case CurseType.Slippery:
+            case CurseType.Slippery:
                 var newCurse = Instantiate(curseSlippery, player.transform);
                 newCurse.tag = "Curse";
                 break;
-                default:
+            default:
                 break;
     }
 }

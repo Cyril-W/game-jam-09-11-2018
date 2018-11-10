@@ -7,21 +7,49 @@ public class PlantEffect : MonoBehaviour
 	[System.Serializable]
 	public class Ingredient
 	{
-		public enum IngredientType { Rat, Frog, Arm, Doll };
+		public enum IngredientType { Rat, Frog, Leg, Doll };
 		public IngredientType ingredientType;
-		[Range(1,4)]
-		public int ingredientColor = 1;
+		[Range(0,3)]
+		public int ingredientColor = 0;
 		public CurseManager.CurseType curseType;
 	}
 
 	public Ingredient ingredient;
 	public Vector3 offsetFromPlayer = new Vector3(0f, 3f, 0f);
-	CauldronManager cauldron;
+
+    [Space]
+
+    [SerializeField] GameObject[] rats;
+    [SerializeField] GameObject[] frogs;
+    [SerializeField] GameObject[] legs;
+    [SerializeField] GameObject[] dolls;
+
+    [Space]
+    [SerializeField] AudioSource throwCauldronAudioSource;
+
+    CauldronManager cauldron;
 
 	private void Awake ()
 	{
 		cauldron = FindObjectOfType<CauldronManager>();
-	}
+        switch (ingredient.ingredientType)
+        {
+            case Ingredient.IngredientType.Rat:
+                rats[ingredient.ingredientColor].SetActive(true);
+                break;
+            case Ingredient.IngredientType.Frog:
+                frogs[ingredient.ingredientColor].SetActive(true);
+                break;
+            case Ingredient.IngredientType.Leg:
+                legs[ingredient.ingredientColor].SetActive(true);
+                break;
+            case Ingredient.IngredientType.Doll:
+                dolls[ingredient.ingredientColor].SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
 
 	public void OnPlantCollect(GameObject player)
 	{
@@ -33,8 +61,9 @@ public class PlantEffect : MonoBehaviour
 
 	public void OnPlantDropInCauldron (GameObject player)
 	{
-		CurseManager.instance.UnCursePlayer(player, ingredient.curseType);
+        throwCauldronAudioSource.PlayOneShot(throwCauldronAudioSource.clip);
+        CurseManager.instance.UnCursePlayer(player, ingredient.curseType);
 		cauldron.CheckPlant(ingredient);
-		Destroy(gameObject);
+		Destroy(gameObject, 0.5f);
 	}
 }

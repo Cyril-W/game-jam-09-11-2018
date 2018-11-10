@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 			rigid.velocity = movement;
 		}
 
-        if (movement.x > 0 || movement.z > 0)
+        if (movement.x != 0 || movement.z != 0)
         {
             model.localRotation = Quaternion.LookRotation(movement);
         }
