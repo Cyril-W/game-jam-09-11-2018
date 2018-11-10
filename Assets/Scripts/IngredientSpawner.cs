@@ -10,6 +10,7 @@ public class IngredientSpawner : MonoBehaviour
 	public PlantEffect.Ingredient[,] ingredientsLists;
 
 	[Header("Spawning Options")]
+	public Vector2 initialSpawnPositions = new Vector2(5f, 5f);
 	public float minDistanceToCauldron = 2f;
 	public float minDistanceToPickups = 1f;
 	public Vector2 minPos;
@@ -31,32 +32,32 @@ public class IngredientSpawner : MonoBehaviour
 	Vector3 GetSpawningPosition(int index)
 	{
 		bool isSomethingNearby = false;
-		Vector3 spawnPos;
+		Vector3 targetSpawnPos;
 		do
 		{
 			isSomethingNearby = false;
 			float xPos = Random.Range(minPos.x, maxPos.x);
 			float zPos = Random.Range(minPos.y, maxPos.y);
-			spawnPos = new Vector3(xPos, 0f, zPos);
+			targetSpawnPos = new Vector3(xPos, 0f, zPos);
 
 			if(index > 0)
 			{
 				for(int i = 0; i<index; i++)
 				{
-					if (Vector3.Distance(spawnPos, itemPositions[i]) < minDistanceToPickups)
+					if (Vector3.Distance(targetSpawnPos, itemPositions[i]) < minDistanceToPickups)
 					{
 						isSomethingNearby = true;
 					}
 				}
 			}
-			if(Vector3.Distance(spawnPos, cauldron.position) < minDistanceToCauldron)
+			if(Vector3.Distance(targetSpawnPos, cauldron.position) < minDistanceToCauldron)
 			{
 				isSomethingNearby = true;
 			}
 		}
 		while (isSomethingNearby == true);
-		itemPositions[index] = spawnPos;
-		return spawnPos;
+		itemPositions[index] = targetSpawnPos;
+		return targetSpawnPos;
 	}
 
 	public void InitIngredientLists (int recipeSize)
@@ -76,8 +77,9 @@ public class IngredientSpawner : MonoBehaviour
 				itemPositions = new Vector3[ingredientsByBatch];
 				for (int j = 0; j < ingredientsByBatch; j++)
 				{
-					Vector3 spawnPos = GetSpawningPosition(j);
-					GameObject spawnedPickup = Instantiate(pickup, spawnPos, Quaternion.identity);
+					Vector3 targetSpawnPos = GetSpawningPosition(j);
+					Vector3 initialSpawnPos = new Vector3(targetSpawnPos.x, initialSpawnPositions.x, initialSpawnPositions.y);
+					GameObject spawnedPickup = Instantiate(pickup, targetSpawnPos, Quaternion.identity);
 					spawnedPickup.GetComponentInChildren<PlantEffect>().ingredient = ingredientsLists[currentBatch, j];
 				}
 				currentBatch++;
