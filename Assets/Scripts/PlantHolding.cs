@@ -8,7 +8,8 @@ public class PlantHolding : MonoBehaviour
 	public string cauldronTag = "Cauldron";
 	PlantEffect currentlyHeldIngredient;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		
 	}
 	

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CurseManager : MonoBehaviour
 {
 	public enum CurseType { InvertMovement, MoveSpeedIncrease, MoveSpeedDecrease, Slippery, CameraEffect, None}
+
 	public void CursePlayer (GameObject player, CurseType curse)
 	{
 		Debug.Log("Player " + player.name + " cursed with " + curse.ToString());
