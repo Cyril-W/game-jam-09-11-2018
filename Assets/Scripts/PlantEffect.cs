@@ -10,7 +10,7 @@ public class PlantEffect : MonoBehaviour, IPlantCollect
 		public enum IngredientType { Rat, Frog, Arm, Doll };
 		public IngredientType ingredientType;
 		[Range(1,4)]
-		public int ingredientColor;
+		public int ingredientColor = 1;
 		public CurseManager.CurseType curseType;
 	}
 

@@ -37,6 +37,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4826646997942700}
+  - component: {fileID: 135727364953068128}
+  - component: {fileID: 135636972312180272}
+  - component: {fileID: 114192354169268884}
   m_Layer: 0
   m_Name: Cauldron
   m_TagString: Untagged
@@ -113,6 +116,51 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545004150109756}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114192354169268884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613337829282498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2bf7d13fb8d1c46a229fbf68ebd02f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipe:
+  - ingredientType: 0
+    ingredientColor: 1
+    curseType: 0
+  - ingredientType: 0
+    ingredientColor: 0
+    curseType: 0
+  - ingredientType: 0
+    ingredientColor: 0
+    curseType: 0
+--- !u!135 &135636972312180272
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613337829282498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.15
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!135 &135727364953068128
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613337829282498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!136 &136757247022899312
 CapsuleCollider:
   m_ObjectHideFlags: 1
