@@ -19,10 +19,12 @@ public class RecipeManager : MonoBehaviour
 	public int colorAmount;
 
 	CauldronManager cauldron;
+	IngredientSpawner ingredientSpawner;
 
 	// Use this for initialization
 	void Start ()
 	{
+		ingredientSpawner = FindObjectOfType<IngredientSpawner>();
 		currentRecipeSize = startRecipeSize;
 		cauldron = FindObjectOfType<CauldronManager>();
 		cauldron.recipe = GenerateRandomRecipe();
@@ -39,7 +41,7 @@ public class RecipeManager : MonoBehaviour
 
 	public void AddRecipeToDropList(PlantEffect.Ingredient recipe)
 	{
-		//Adds current recipe to the drop table so the right ingredient spawns soon-ish
+		//ingredientSpawner.ingredientsList.Add(recipe);
 	}
 
 	public PlantEffect.Ingredient GenerateRandomIngredient()
@@ -64,6 +66,7 @@ public class RecipeManager : MonoBehaviour
 		for(int i = 0; i<currentRecipeSize; i++)
 		{
 			recipe[i] = GenerateRandomIngredient();
+			AddRecipeToDropList(recipe[i]);
 		}
 
 		return recipe;
@@ -75,7 +78,6 @@ public class RecipeManager : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.R))
 		{
-			Debug.Log("BOOYA");
 			IncreaseRecipeSize(true);
 		}
 	}
