@@ -2,15 +2,12 @@
 
 public abstract class CursePlayer : MonoBehaviour
 {
-    [SerializeField] protected float duration;
+    protected PlayerMovement playerMovement;
 
     private void OnEnable()
     {
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
         OnCurseBegin();
-        if (duration > 0f)
-        {
-            Destroy(gameObject, duration);
-        }
     }
 
     private void OnDisable()

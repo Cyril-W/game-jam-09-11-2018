@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Cauldron
   - Ingredient
-  - Curse
   layers:
   - Default
   - TransparentFX
