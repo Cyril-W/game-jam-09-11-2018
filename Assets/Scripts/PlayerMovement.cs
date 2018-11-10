@@ -16,7 +16,10 @@ public class PlayerMovement : MonoBehaviour
 	public float dirMult = 1f;
 	public bool useInertia;
 
-	Rigidbody rigid;
+    [Header("Change Player Model")]
+    public Transform model;
+
+    Rigidbody rigid;
 
 	// Use this for initialization
 	void Start ()
@@ -54,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
 			rigid.velocity = movement;
 		}
 
+        if (movement.x > 0 || movement.z > 0)
+        {
+            model.localRotation = Quaternion.LookRotation(movement);
+        }
 	}
 
 	// Update is called once per frame
