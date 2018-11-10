@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: da90f67a18ef06b44af73b614599c4f4
+guid: 494bcada41a29a64a879ff3a60117358
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: green_frog
+    100002: gar_cover
     400000: //RootNode
-    400002: green_frog
-    2100000: green_frogMat
-    2300000: green_frog
-    3300000: green_frog
-    4300000: green_frog
+    400002: gar_cover
+    2100000: gar_coverMat
+    2300000: gar_cover
+    3300000: gar_cover
+    4300000: gar_cover
   externalObjects: {}
   materials:
     importMaterials: 1

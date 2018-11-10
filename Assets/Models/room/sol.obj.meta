@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 84dd489e53599c04aa37be4060cad2ec
+guid: b2f124eca6e2d0247b5a6c15d2805985
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: etageres
+    100000: sol
     100002: //RootNode
-    400000: etageres
+    400000: sol
     400002: //RootNode
-    2100000: etageresMat
-    2300000: etageres
-    3300000: etageres
-    4300000: etageres
+    2100000: solMat
+    2300000: sol
+    3300000: sol
+    4300000: sol
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -42,7 +42,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 0.5
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
