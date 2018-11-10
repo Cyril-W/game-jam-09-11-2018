@@ -13,11 +13,13 @@ public class CauldronManager : MonoBehaviour
 	{
 		if(recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
+			Debug.Log("Good Ingredient put inside !");
 			//ADD FEEDBACK HERE
 			index++;
 		}
 		else
 		{
+			Debug.Log("Bad Ingredient put inside !");
 			CurseManager.instance.CurseAllPlayers(ingredient.curseType);
 		}
 	}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlantEffect : MonoBehaviour, IPlantCollect
+public class PlantEffect : MonoBehaviour
 {
 	[System.Serializable]
 	public class Ingredient
@@ -15,14 +15,26 @@ public class PlantEffect : MonoBehaviour, IPlantCollect
 	}
 
 	public Ingredient ingredient;
+	public Vector3 offsetFromPlayer = new Vector3(0f, 3f, 0f);
+	CauldronManager cauldron;
 
-	public void OnPlantCollect()
+	private void Awake ()
 	{
-
+		cauldron = FindObjectOfType<CauldronManager>();
 	}
 
-	public void OnPlantDropInCauldron ()
+	public void OnPlantCollect(GameObject player)
 	{
+		CurseManager.instance.CursePlayer(player, ingredient.curseType);
+		// Place Item on top of player + play anim
+		transform.parent = player.transform;
+		transform.localPosition = offsetFromPlayer;
+	}
 
+	public void OnPlantDropInCauldron (GameObject player)
+	{
+		CurseManager.instance.UnCursePlayer(player, ingredient.curseType);
+		cauldron.CheckPlant(ingredient);
+		Destroy(gameObject);
 	}
 }
