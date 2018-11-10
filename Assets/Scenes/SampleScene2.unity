@@ -661,6 +661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 563824632}
+  - component: {fileID: 563824633}
   m_Layer: 0
   m_Name: IngredientSpawner
   m_TagString: Untagged
@@ -681,6 +682,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563824633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 563824631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08dfe5bbdd93d4d4c88e095c8debe53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickup: {fileID: 1487552605960776, guid: fc679173b8b970e439df5cf19622b1d3, type: 2}
+  ingredientsByBatch: 5
+  currentBatch: 0
 --- !u!1 &889893717
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,10 +916,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 1869217896906584, guid: fc679173b8b970e439df5cf19622b1d3, type: 2}
-      propertyPath: m_TagString
-      value: Ingredient
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc679173b8b970e439df5cf19622b1d3, type: 2}
   m_IsPrefabAsset: 0
@@ -916,7 +927,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1110150579}
-  - component: {fileID: 1110150578}
   m_Layer: 0
   m_Name: CurseManager
   m_TagString: Untagged
@@ -924,17 +934,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1110150578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1110150577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b3446d4bdc8f84a8a5ced581cb1f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1110150579
 Transform:
   m_ObjectHideFlags: 0
@@ -1345,6 +1344,11 @@ Prefab:
     - target: {fileID: 1524692154693020, guid: b8a033ece5955cb488d741434ac20e6d, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114968126769670734, guid: b8a033ece5955cb488d741434ac20e6d,
+        type: 2}
+      propertyPath: useInertia
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8a033ece5955cb488d741434ac20e6d, type: 2}
