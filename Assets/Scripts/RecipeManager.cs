@@ -46,7 +46,7 @@ public class RecipeManager : MonoBehaviour
 
 	public PlantEffect.Ingredient GenerateRandomIngredient()
 	{
-		Debug.Log("Generating random Ingredient");
+		//Debug.Log("Generating random Ingredient");
 		PlantEffect.Ingredient recipe = new PlantEffect.Ingredient();
 
 		int randomColor = Random.Range(1, colorAmount+1);
@@ -57,7 +57,7 @@ public class RecipeManager : MonoBehaviour
 		int randomType = Random.Range(1, System.Enum.GetNames(typeof(PlantEffect.Ingredient.IngredientType)).Length);
 
 		recipe.ingredientType = (PlantEffect.Ingredient.IngredientType)randomType;
-		Debug.Log("New recipe : " + recipe);
+		//Debug.Log("New recipe : " + recipe);
 		return recipe;
 	}
 
