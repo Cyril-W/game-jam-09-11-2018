@@ -1,6 +1,10 @@
-﻿public class InvertMovement : CursePlayer {
+﻿public class CurseSlippery : CursePlayer {
+
+    protected PlayerMovement playerMovement;
+
     protected override void OnCurseBegin()
     {
+        playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
         playerMovement.useInertia = true;
     }
 

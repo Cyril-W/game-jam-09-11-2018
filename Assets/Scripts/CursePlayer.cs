@@ -2,11 +2,8 @@
 
 public abstract class CursePlayer : MonoBehaviour
 {
-    protected PlayerMovement playerMovement;
-
     private void OnEnable()
     {
-        playerMovement = gameObject.GetComponent<PlayerMovement>();
         OnCurseBegin();
     }
 

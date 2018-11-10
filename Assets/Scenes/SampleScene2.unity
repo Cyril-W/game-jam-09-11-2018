@@ -951,7 +951,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b3446d4bdc8f84a8a5ced581cb1f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   invertMovement: {fileID: 0}
+=======
+  curseSlippery: {fileID: 1379426690705916, guid: 392af9c66e6d11547ab8a0b0cd2b5485,
+    type: 2}
+>>>>>>> 317fc242ade1d665da418b9ea0968ee1669d4192
 --- !u!4 &1110150579
 Transform:
   m_ObjectHideFlags: 0
