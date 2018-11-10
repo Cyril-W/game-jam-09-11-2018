@@ -10,6 +10,11 @@ public class CurseManager : MonoBehaviour
 
 	}
 
+	public void CurseAllPlayers (CurseType curse)
+	{
+
+	}
+
 	#region Singleton
 	public static CurseManager instance;
 	private void Awake ()
