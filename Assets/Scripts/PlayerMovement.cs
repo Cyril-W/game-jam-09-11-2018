@@ -63,15 +63,6 @@ public class PlayerMovement : MonoBehaviour
         }
 	}
 
-	// Update is called once per frame
-	void Update ()
-	{
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			useInertia = !useInertia;
-		}
-	}
-
 	private void FixedUpdate ()
 	{
 		Movement();
