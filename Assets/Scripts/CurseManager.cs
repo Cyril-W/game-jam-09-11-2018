@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CurseManager : MonoBehaviour
 {
-    public enum CurseType { InvertMovement } //, MoveSpeedIncrease, MoveSpeedDecrease, Slippery, CameraEffect, None }
+    public enum CurseType { Slippery } // InveseMovement, MoveSpeedIncrease, MoveSpeedDecrease, Slippery, CameraEffect, None }
 
-    [SerializeField] InvertMovement invertMovement;
+    [SerializeField] GameObject curseInvertMovement;
 
 	public void CursePlayer (GameObject player, CurseType curse)
 	{
@@ -14,17 +14,34 @@ public class CurseManager : MonoBehaviour
 
         switch (curse)
         {
-            case CurseType.InvertMovement:
-                player.AddComponent<InvertMovement>();
+            case CurseType.Slippery:
+                var newCurse = Instantiate(curseInvertMovement, player.transform);
+                newCurse.tag = "Curse";
                 break;
             default:
                 break;
         }
     }
 
-	public void UnCursePlayer (GameObject player, CurseType curse)
+	public void UnCursePlayer (GameObject player, CurseType curseType)
 	{
-		Debug.Log("Player " + player.name + " cured from " + curse.ToString());
+		Debug.Log("Player " + player.name + " cured from " + curseType.ToString());
+
+        var curses = GameObject.FindGameObjectsWithTag("Curse");
+        foreach (GameObject curse in curses)
+        {
+            switch (curseType)
+            {
+                case CurseType.Slippery:
+                    if (curse.GetComponent<Slippery>())
+                    {
+                        Destroy(curse.gameObject);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
 	}
 
 	public void CurseAllPlayers (CurseType curse)

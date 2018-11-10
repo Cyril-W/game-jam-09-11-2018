@@ -1,6 +1,12 @@
-﻿public class InvertMovement : CursePlayer {
+﻿using UnityEngine;
+
+public class Slippery : CursePlayer {
+
+    PlayerMovement playerMovement;
+
     protected override void OnCurseBegin()
     {
+        playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
         playerMovement.useInertia = true;
     }
 
