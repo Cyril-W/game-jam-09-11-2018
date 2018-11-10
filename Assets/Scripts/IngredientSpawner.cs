@@ -66,6 +66,19 @@ public class IngredientSpawner : MonoBehaviour
 		batchAmount = recipeSize;
 	}
 
+	public void SpawnIngredients()
+	{
+		itemPositions = new Vector3[ingredientsByBatch];
+		for (int j = 0; j < ingredientsByBatch; j++)
+		{
+			Vector3 targetSpawnPos = GetSpawningPosition(j);
+			Vector3 initialSpawnPos = new Vector3(targetSpawnPos.x, initialSpawnPositions.x, initialSpawnPositions.y);
+			GameObject spawnedPickup = Instantiate(pickup, targetSpawnPos, Quaternion.identity);
+			spawnedPickup.GetComponentInChildren<PlantEffect>().ingredient = ingredientsLists[currentBatch, j];
+		}
+		currentBatch++;
+	}
+
 
 	// Update is called once per frame
 	void Update ()
@@ -74,15 +87,7 @@ public class IngredientSpawner : MonoBehaviour
 		{
 			if (currentBatch < batchAmount)
 			{
-				itemPositions = new Vector3[ingredientsByBatch];
-				for (int j = 0; j < ingredientsByBatch; j++)
-				{
-					Vector3 targetSpawnPos = GetSpawningPosition(j);
-					Vector3 initialSpawnPos = new Vector3(targetSpawnPos.x, initialSpawnPositions.x, initialSpawnPositions.y);
-					GameObject spawnedPickup = Instantiate(pickup, targetSpawnPos, Quaternion.identity);
-					spawnedPickup.GetComponentInChildren<PlantEffect>().ingredient = ingredientsLists[currentBatch, j];
-				}
-				currentBatch++;
+				SpawnIngredients();
 			}
 		}
 	}
