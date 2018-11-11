@@ -9,7 +9,10 @@ public class StartGame : MonoBehaviour
 	void Start ()
 	{
 		playerMgr = FindObjectOfType<PlayerManagement>();
-		playerMgr.SpawnPlayers();
+		if(playerMgr != null)
+		{
+			playerMgr.SpawnPlayers();
+		}
 	}
 	
 	// Update is called once per frame

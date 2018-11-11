@@ -17,7 +17,14 @@ public class CauldronManager : MonoBehaviour
     [SerializeField] Transform recipeUI;
     [SerializeField] Transform ingredientUIPrefab;
 
-    int index = 0;
+	[SerializeField] float explosionRange = 5f;
+	[SerializeField] LayerMask explosionMask;
+	[SerializeField] float explosionForce = 500f;
+	[SerializeField] float upwardsModifier = 3f;
+
+
+
+	int index = 0;
 	PlantEffect.Ingredient[] recipe;
     List<IngredientUI> ingredientsUI = new List<IngredientUI>();
 
@@ -85,9 +92,28 @@ public class CauldronManager : MonoBehaviour
             CauldronFailed();
         }
 	}
+
+	public IEnumerator DisablePlayerMovement(PlayerMovement player)
+	{
+		player.enabled = false;
+		yield return new WaitForSeconds(1f);
+		player.enabled = true;
+	}
 	
     public void CauldronFailed()
     {
+		Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, explosionMask);
+		foreach(Collider col in players)
+		{
+			Rigidbody rigid = col.GetComponent<Rigidbody>();
+			PlayerMovement playerMvt = col.GetComponent<PlayerMovement>();
+			if(playerMvt != null && rigid != null)
+			{
+				StartCoroutine(DisablePlayerMovement(playerMvt));
+				rigid.AddExplosionForce(explosionForce, transform.position, explosionRange, upwardsModifier);
+			}
+		}
+
         foreach (var item in ingredientsUI)
         {
             Destroy(item.gameObject);
@@ -97,6 +123,11 @@ public class CauldronManager : MonoBehaviour
         SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
         index = 0;
     }
+
+	void DestroyAllItems()
+	{
+		PlantEffect[] plants = FindObjectsOfType<PlantEffect>();
+	}
 
 	public IEnumerator NewBatch()
 	{
