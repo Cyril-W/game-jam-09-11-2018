@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerSelectManagement : MonoBehaviour
 {
+	public Image blackImage;
+	public Animator fadeAnim;
+	public AudioClip playerSelect;
+	public AudioClip validation;
 	public int sceneIndexToLoad = 1;
 	public string[] hInputs = new string[4];
 	public string[] vInputs = new string[4];
@@ -26,6 +31,7 @@ public class PlayerSelectManagement : MonoBehaviour
 	{
 		if(selectedPlayers[index] == false)
 		{
+			AudioSource.PlayClipAtPoint(playerSelect, transform.position);
 			GameObject characterModel = Instantiate(characterModels[modelIndexes[index]], slots[index].position + Vector3.up, characterModels[modelIndexes[index]].transform.rotation);
 			spawnedCharacters[index] = characterModel;
 			playerAmount++;
@@ -71,6 +77,7 @@ public class PlayerSelectManagement : MonoBehaviour
 			Destroy(spawnedCharacters[index]);
 			GameObject characterModel = Instantiate(characterModels[modelIndexes[index]], slots[index].position + Vector3.up, characterModels[modelIndexes[index]].transform.rotation);
 			spawnedCharacters[index] = characterModel;
+			AudioSource.PlayClipAtPoint(playerSelect, transform.position);
 		}
 	}
 
@@ -85,6 +92,14 @@ public class PlayerSelectManagement : MonoBehaviour
 	public void StartGame()
 	{
 		AffectPlayers();
+		AudioSource.PlayClipAtPoint(validation, transform.position);
+		StartCoroutine(Fading());
+	}
+
+	public IEnumerator Fading()
+	{
+		fadeAnim.SetBool("Fade", true);
+		yield return new WaitUntil(() => blackImage.color.a == 1);
 		SceneManager.LoadScene(sceneIndexToLoad);
 	}
 
