@@ -1382,7 +1382,7 @@ MonoBehaviour:
   posZPickup: 17.5
   posYPickup:
   - 5.5
-  minDistanceToCauldron: 2
+  minDistanceToCauldron: 8
   minDistanceToPickups: 1
   targetsSpawningZone: {fileID: 563824634}
   cauldron: {fileID: 1984432982}
@@ -3400,31 +3400,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: 25.25
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -30
+      value: -24.25
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.2588191
+      value: 0.38268328
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.9659258
+      value: 0.9238797
       objectReference: {fileID: 0}
     - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4372501247226516, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 45.000004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cda9385e5c49c446bbcb349a2d55980, type: 2}
@@ -4028,7 +4032,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2074745302}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71770cea313418d44b187d49570522ed, type: 3}
   m_Name: 

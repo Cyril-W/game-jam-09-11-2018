@@ -9,6 +9,7 @@ public class PlayerSelectManagement : MonoBehaviour
 	public string[] hInputs = new string[4];
 	public string[] vInputs = new string[4];
 
+	public Vector3 rotateSpeed;
 	public GameObject[] characterModels = new GameObject[4];
 	GameObject[] spawnedCharacters = new GameObject[4];
 	public Transform[] slots = new Transform[4];
@@ -119,11 +120,12 @@ public class PlayerSelectManagement : MonoBehaviour
 			if(Input.GetButtonDown(vInputs[i]))
 			{
 				DisplayCharacter(i);
+				SwitchCharacterModel(i, Input.GetAxis(hInputs[i]));
 			}
-			if(Input.GetButtonDown(hInputs[i]))
+			if(Input.GetButton(hInputs[i]))
 			{
 				DisplayCharacter(i);
-				SwitchCharacterModel(i, Input.GetAxis(hInputs[i]));
+				spawnedCharacters[i].transform.Rotate(rotateSpeed * Time.deltaTime * Input.GetAxis(hInputs[i]));
 			}
 		}
 		if(playerAmount > 0)

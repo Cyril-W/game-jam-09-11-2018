@@ -21,7 +21,7 @@ public class IngredientSpawner : MonoBehaviour
     public float posZPickup;
     public List<float> posYPickup;
 
-    public float minDistanceToCauldron = 2f;
+    public float minDistanceToCauldron = 4f;
 	public float minDistanceToPickups = 1f;
 
     public Collider targetsSpawningZone;
@@ -70,6 +70,19 @@ public class IngredientSpawner : MonoBehaviour
 		return targetSpawnPos;
 	}*/
 
+	public Vector3 GetSpawnPosFarFromCauldron()
+	{
+		int debug = 0;
+		Vector3 testPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
+		while(Vector3.Distance(testPos, cauldron.position) < minDistanceToCauldron || debug < 50)
+		{
+			testPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
+			Debug.Log("Test position at try " + debug + " : " + testPos);
+			debug++;
+		}
+		return testPos;
+	}
+
     public Vector3 GetRandomPointInBounds(Bounds bounds)
     {
         return new Vector3(
@@ -99,10 +112,10 @@ public class IngredientSpawner : MonoBehaviour
             // set pickup position, always the same z
             Vector3 initialPosPickup = new Vector3(xPos, 0, posZPickup);
 
-            // set target position
-            Vector3 targetPos = GetRandomPointInBounds(targetsSpawningZone.bounds); // GetSpawningPosition(j);
-            
-            // spawn pick up
+			// set target position
+			Vector3 targetPos = GetSpawnPosFarFromCauldron(); // GetSpawningPosition(j);
+
+			// spawn pick up
 			GameObject spawnedPickup = Instantiate(pickup, initialPosPickup, Quaternion.identity);
             var pickupFall = spawnedPickup.GetComponent<PickupFall>();
             pickupFall.SetPickupHeight(yPos);
