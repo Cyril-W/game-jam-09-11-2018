@@ -26,7 +26,7 @@ public class RecipeManager : MonoBehaviour
 	{
 		currentRecipeSize = startRecipeSize;
 		cauldron = FindObjectOfType<CauldronManager>();
-		cauldron.recipe = GenerateRandomRecipe();
+		cauldron.SetCauldronRecipe(GenerateRandomRecipe());
 	}
 
 	public void IncreaseRecipeSize (bool loadNewRecipe)
@@ -34,31 +34,27 @@ public class RecipeManager : MonoBehaviour
 		currentRecipeSize += recipeSizeIncByLevel;
 		if(loadNewRecipe)
 		{
-			cauldron.recipe = GenerateRandomRecipe();
+			cauldron.SetCauldronRecipe(GenerateRandomRecipe());
 		}
 	}
 
 	public void AddRecipeToDropList(PlantEffect.Ingredient recipe, int index)
 	{
 		ingredientSpawner.ingredientsLists[ingredientSpawner.currentBatch, index] = recipe;
-		//ingredientSpawner.ingredientsLists[ingredientSpawner.currentBatch].Add(recipe);
 	}
 
 	public PlantEffect.Ingredient GenerateRandomIngredient()
 	{
-		//Debug.Log("Generating random Ingredient");
-		PlantEffect.Ingredient recipe = new PlantEffect.Ingredient();
+		PlantEffect.Ingredient ingredient = new PlantEffect.Ingredient();
 
-		int randomColor = Random.Range(1, colorAmount+1);
-		recipe.ingredientColor = randomColor;
+		int randomColor = Random.Range(0, colorAmount);
+		ingredient.ingredientColor = randomColor;
 
-		//Debug.Log("Enum Length " + System.Enum.GetNames(typeof(PlantEffect.Ingredient.IngredientType)).Length);
+        var ingredientTypes = System.Enum.GetNames(typeof(PlantEffect.Ingredient.IngredientType)).Length;
+        int randomType = Random.Range(0, ingredientTypes);
 
-		int randomType = Random.Range(1, System.Enum.GetNames(typeof(PlantEffect.Ingredient.IngredientType)).Length);
-
-		recipe.ingredientType = (PlantEffect.Ingredient.IngredientType)randomType;
-		//Debug.Log("New recipe : " + recipe);
-		return recipe;
+        ingredient.ingredientType = (PlantEffect.Ingredient.IngredientType)randomType;
+		return ingredient;
 	}
 
 	public PlantEffect.Ingredient[] GenerateRandomRecipe ()
@@ -75,13 +71,12 @@ public class RecipeManager : MonoBehaviour
 			{
 				AddRecipeToDropList(GenerateRandomIngredient(), j);
 			}
-			//Debug.Log("Batch size : " + ingredientSpawner.currentBatch);
 		}
 		ingredientSpawner.currentBatch = 0;
 		return recipe;
 	}
 
-		// Update is called once per frame
+	// Update is called once per frame
 	void Update ()
 	{
 		if(Input.GetKeyDown(KeyCode.R))

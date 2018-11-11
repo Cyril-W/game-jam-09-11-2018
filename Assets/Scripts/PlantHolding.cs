@@ -16,7 +16,7 @@ public class PlantHolding : MonoBehaviour
 			other.GetComponent<SphereCollider>().enabled = false;
 			if (currentlyHeldIngredient != null)
 			{
-				CurseManager.instance.UnCursePlayer(gameObject, currentlyHeldIngredient.ingredient.curseType);
+				CurseManager.instance.UnCursePlayer(gameObject, currentlyHeldIngredient.GetIngredient().curseType);
 				currentlyHeldIngredient.transform.localPosition = Vector3.zero;
 				currentlyHeldIngredient.transform.parent = null;
 				StartCoroutine(ActivateColliderAfter(currentlyHeldIngredient.gameObject));

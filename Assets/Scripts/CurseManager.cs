@@ -10,7 +10,6 @@ public class CurseManager : MonoBehaviour
 
 	public void CursePlayer (GameObject player, CurseType curse)
 	{
-		Debug.Log("Player " + player.name + " cursed with " + curse.ToString());
         switch (curse)
         {
             case CurseType.Slippery:
@@ -24,8 +23,6 @@ public class CurseManager : MonoBehaviour
 
 	public void UnCursePlayer (GameObject player, CurseType curseType)
 	{
-		Debug.Log("Player " + player.name + " cured from " + curseType.ToString());
-
         var curses = GameObject.FindGameObjectsWithTag("Curse");
         foreach (GameObject curse in curses)
         {

@@ -25,11 +25,22 @@ public class PickupFall : MonoBehaviour {
     [SerializeField] int numbersToEmit = 30;
     [SerializeField] ParticleSystem particlesGlass;
 
-    void Start () {
+    public void SetPickupHeight(float zPos)
+    {
+        pickUp.localPosition += Vector3.up * zPos;
+    }
+
+    public void SetTargetPos(Vector3 targetPos)
+    {
+        target.position = targetPos;
         target.localScale = Vector3.zero;
         target.gameObject.SetActive(true);
+    }
+
+    public void Throw()
+    {
         StartCoroutine(Fall());
-	}
+    }
 
     IEnumerator Fall()
     {

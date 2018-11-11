@@ -1275,16 +1275,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2bf7d13fb8d1c46a229fbf68ebd02f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipe:
-  - ingredientType: 1
-    ingredientColor: 2
-    curseType: 0
-  - ingredientType: 2
-    ingredientColor: 1
-    curseType: 0
-  - ingredientType: 3
-    ingredientColor: 0
-    curseType: 0
+  cauldronParticlesSmoke: {fileID: 198695674326914204}
+  cauldronAudioSource: {fileID: 82898545801715910}
+  cauldronGood: {fileID: 8300000, guid: 132c25ee2f1316e4ba152bec6c977cdd, type: 3}
+  cauldronBad: {fileID: 8300000, guid: 37f42cd1597ce8f4aa2df79f66291ef0, type: 3}
+  cauldronApplause: {fileID: 8300000, guid: ebe532efe2bdd0545827740af10628aa, type: 3}
+  recipeAnimator: {fileID: 0}
+  recipeUI: {fileID: 0}
+  ingredientUIPrefab: {fileID: 224587521666807682, guid: 2e078495dc2f1d044a0f0b8090dd3dc5,
+    type: 2}
 --- !u!114 &114503246328817646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5869,7 +5868,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -6630,7 +6629,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2

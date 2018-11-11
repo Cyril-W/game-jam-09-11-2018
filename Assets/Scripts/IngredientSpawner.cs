@@ -9,15 +9,18 @@ public class IngredientSpawner : MonoBehaviour
 	public int currentBatch = 0;
 	public PlantEffect.Ingredient[,] ingredientsLists;
 
-	[Header("Spawning Options")]
-	public Vector2 initialSpawnPositions = new Vector2(5f, 5f);
-	public float minDistanceToCauldron = 2f;
-	public float minDistanceToPickups = 1f;
-	public Vector2 minPos;
-	public Vector2 maxPos;
-	public Transform cauldron;
+    [Header("Spawning Options")]
+    public Vector2 posXPickup;
+    public float posZPickup;
+    public List<float> posYPickup;
 
-	Vector3[] itemPositions;
+    public float minDistanceToCauldron = 2f;
+	public float minDistanceToPickups = 1f;
+
+    public Collider targetsSpawningZone;
+    public Transform cauldron;
+
+	List<PickupFall> pickupFalls = new List<PickupFall>();
 	int batchAmount = 0;
 
 	// Use this for initialization
@@ -29,7 +32,7 @@ public class IngredientSpawner : MonoBehaviour
 		}
 	}
 
-	Vector3 GetSpawningPosition(int index)
+	/*Vector3 GetSpawningPosition(int index)
 	{
 		bool isSomethingNearby = false;
 		Vector3 targetSpawnPos;
@@ -58,9 +61,18 @@ public class IngredientSpawner : MonoBehaviour
 		while (isSomethingNearby == true);
 		itemPositions[index] = targetSpawnPos;
 		return targetSpawnPos;
-	}
+	}*/
 
-	public void InitIngredientLists (int recipeSize)
+    Vector3 GetRandomPointInBounds(Bounds bounds)
+    {
+        return new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            Random.Range(bounds.min.z, bounds.max.z)
+        );
+    }
+
+    public void InitIngredientLists (int recipeSize)
 	{
 		ingredientsLists = new PlantEffect.Ingredient[recipeSize, ingredientsByBatch];
 		batchAmount = recipeSize;
@@ -68,17 +80,42 @@ public class IngredientSpawner : MonoBehaviour
 
 	public void SpawnIngredients()
 	{
-		itemPositions = new Vector3[ingredientsByBatch];
 		for (int j = 0; j < ingredientsByBatch; j++)
 		{
-			Vector3 targetSpawnPos = GetSpawningPosition(j);
-			Vector3 initialSpawnPos = new Vector3(targetSpawnPos.x, initialSpawnPositions.x, initialSpawnPositions.y);
-			GameObject spawnedPickup = Instantiate(pickup, targetSpawnPos, Quaternion.identity);
-			spawnedPickup.GetComponentInChildren<PlantEffect>().ingredient = ingredientsLists[currentBatch, j];
+            // set spawn position x, along the shelf
+            float xPos = Random.Range(posXPickup.x, posXPickup.y);
+
+            // set spawn position z, which shelf it is
+            // CAREFULL : the position is applied to the pickup renderer, not the whole prefab
+            float yPos = posYPickup[Random.Range(0, posYPickup.Count)];
+
+            // set pickup position, always the same z
+            Vector3 initialPosPickup = new Vector3(xPos, 0, posZPickup);
+
+            // set target position
+            Vector3 targetPos = GetRandomPointInBounds(targetsSpawningZone.bounds); // GetSpawningPosition(j);
+            
+            // spawn pick up
+			GameObject spawnedPickup = Instantiate(pickup, initialPosPickup, Quaternion.identity);
+            var pickupFall = spawnedPickup.GetComponent<PickupFall>();
+            pickupFall.SetPickupHeight(yPos);
+            pickupFall.SetTargetPos(targetPos);
+            pickupFalls.Add(pickupFall);
+
+            // attribute the ingredient
+            spawnedPickup.GetComponentInChildren<PlantEffect>().SetIngredient(ingredientsLists[currentBatch, j]);
 		}
 		currentBatch++;
 	}
 
+    void ThrowPickup()
+    {
+        if (pickupFalls.Count > 0)
+        {
+            pickupFalls[0].Throw();
+            pickupFalls.RemoveAt(0);
+        }
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -89,6 +126,9 @@ public class IngredientSpawner : MonoBehaviour
 			{
 				SpawnIngredients();
 			}
-		}
+		} else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ThrowPickup();
+        }
 	}
 }

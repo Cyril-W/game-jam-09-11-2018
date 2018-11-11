@@ -4,43 +4,36 @@ using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour {
 
-    [Range(0, 1)]
     public float time = 0f;
+    public float timeBeforeNextRecipe = 5f;
 
-    [Space]
-
-    [SerializeField] Text timeCurrent;
-    [SerializeField] Text timeLeft;
-
-    [Space]
-
+    [SerializeField] CauldronManager cauldronManager;
     [SerializeField] Transform hourglass;
     [SerializeField] Image hourglassUp;
     [SerializeField] Image hourglassDown;
     [SerializeField] float timeToFlipHourglass = 0.1f;
 
-	// Update is called once per frame
-	void Update () {
+    private void OnEnable()
+    {
+        time = 0f;
+        UpdateFillAmounts();
+    }
+   
+    void Update () {
         time += Time.deltaTime;
-        if (time > 1f)
+        if (time > timeBeforeNextRecipe)
         {
-            StartCoroutine(FlipHourGlass());
+            //StartCoroutine(FlipHourGlass());
             time = 0f;
+            cauldronManager.CauldronFailed();
         }
         UpdateFillAmounts();
-        UpdateTexts();
     }
 
     void UpdateFillAmounts()
     {
-        hourglassUp.fillAmount = 1f - time;
-        hourglassDown.fillAmount = time;
-    }
-
-    void UpdateTexts()
-    {
-        timeCurrent.text = time.ToString("F2");
-        timeLeft.text = "1";
+        hourglassUp.fillAmount = (timeBeforeNextRecipe - time) / timeBeforeNextRecipe;
+        hourglassDown.fillAmount = time / timeBeforeNextRecipe;
     }
 
     IEnumerator FlipHourGlass()

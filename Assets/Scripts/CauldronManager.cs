@@ -4,35 +4,92 @@ using UnityEngine;
 
 public class CauldronManager : MonoBehaviour
 {
-	public PlantEffect.Ingredient[] recipe;
+    [SerializeField] ParticleSystem cauldronParticlesSmoke;
 
-	int index = 0;
+    [SerializeField] AudioSource cauldronAudioSource;
+    [SerializeField] AudioClip cauldronGood;
+    [SerializeField] AudioClip cauldronBad;
+    [SerializeField] AudioClip cauldronApplause;
+
+    [Space]
+
+    [SerializeField] Animator recipeAnimator;
+    [SerializeField] Transform recipeUI;
+    [SerializeField] Transform ingredientUIPrefab;
+
+    int index = 0;
+	PlantEffect.Ingredient[] recipe;
+    List<IngredientUI> ingredientsUI = new List<IngredientUI>();
+
+    public void SetCauldronRecipe(PlantEffect.Ingredient[] newRecipe)
+    {
+        if (newRecipe.Length > 0)
+        {
+            recipe = newRecipe;
+
+            for (var i = 0; i < recipe.Length; i++)
+            {
+                var ingredient = recipe[i];
+                Debug.Log("need: " + ingredient.ingredientType + " in " + ingredient.ingredientColor);
+                var newIngredient = Instantiate(ingredientUIPrefab, recipeUI);
+                var newIngredientUI = newIngredient.GetComponent<IngredientUI>();
+                ingredientsUI.Add(newIngredientUI);
+                newIngredientUI.DisplayIngredient(ingredient);
+                if (i == 0)
+                {
+                    newIngredientUI.ToggleSelected();
+                }
+            }
+
+            recipeAnimator.SetTrigger("Open");
+        }
+    }
 
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
 	public void CheckPlant(PlantEffect.Ingredient ingredient)
 	{
 		if(recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
-			Debug.Log("Good Ingredient put inside !");
-			//ADD FEEDBACK HERE
-			if(index < RecipeManager.instance.currentRecipeSize)
+	        cauldronAudioSource.PlayOneShot(cauldronGood);
+            cauldronParticlesSmoke.Pause();
+
+            if (index < RecipeManager.instance.currentRecipeSize)
 			{
-				index++;
-			}
+                ingredientsUI[index].ToggleSelected();
+                index++;
+                ingredientsUI[index].ToggleSelected();
+            }
 			else
 			{
-				Debug.Log("Recipe complete !");
-				RecipeManager.instance.IncreaseRecipeSize(true);
+                foreach (var item in ingredientsUI)
+                {
+                    Destroy(item.gameObject);
+                }
+                ingredientsUI.Clear();
+                recipeAnimator.SetTrigger("Close");
+                cauldronAudioSource.PlayOneShot(cauldronApplause);
+                RecipeManager.instance.IncreaseRecipeSize(true);
 			}
 		}
 		else
 		{
-			Debug.Log("Bad Ingredient put inside !");
-			CurseManager.instance.CurseAllPlayers(ingredient.curseType);
-			RecipeManager.instance.GenerateRandomRecipe();
-			index = 0;
-		}
+            CurseManager.instance.CurseAllPlayers(ingredient.curseType);
+            cauldronAudioSource.PlayOneShot(cauldronBad);
+            cauldronParticlesSmoke.Play();
+
+            CauldronFailed();
+        }
 	}
 	
-
+    public void CauldronFailed()
+    {
+        foreach (var item in ingredientsUI)
+        {
+            Destroy(item.gameObject);
+        }
+        ingredientsUI.Clear();
+        recipeAnimator.SetTrigger("Close");      
+        SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
+        index = 0;
+    }
 }

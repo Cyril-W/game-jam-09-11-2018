@@ -13,8 +13,7 @@ public class PlantEffect : MonoBehaviour
 		public int ingredientColor = 0;
 		public CurseManager.CurseType curseType;
 	}
-
-	public Ingredient ingredient;
+    	
 	public Vector3 offsetFromPlayer = new Vector3(0f, 3f, 0f);
 
     [Space]
@@ -24,14 +23,29 @@ public class PlantEffect : MonoBehaviour
     [SerializeField] GameObject[] legs;
     [SerializeField] GameObject[] dolls;
 
-    [Space]
-    [SerializeField] AudioSource throwCauldronAudioSource;
-
+    Ingredient ingredient;
     CauldronManager cauldron;
 
 	private void Awake ()
 	{
 		cauldron = FindObjectOfType<CauldronManager>();
+    }
+
+    public Ingredient GetIngredient()
+    {
+        return ingredient;
+    }
+
+    public void SetIngredient(Ingredient newIngredient)
+    {
+        if (newIngredient == null)
+        {
+            Debug.LogError("new ingredient is null");
+            return;
+        }
+
+        ingredient = newIngredient;
+
         switch (ingredient.ingredientType)
         {
             case Ingredient.IngredientType.Rat:
@@ -61,9 +75,9 @@ public class PlantEffect : MonoBehaviour
 
 	public void OnPlantDropInCauldron (GameObject player)
 	{
-        throwCauldronAudioSource.PlayOneShot(throwCauldronAudioSource.clip);
         CurseManager.instance.UnCursePlayer(player, ingredient.curseType);
 		cauldron.CheckPlant(ingredient);
-		Destroy(gameObject, 0.5f);
+        // play anim then destroy
+		Destroy(gameObject);
 	}
 }
