@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CauldronManager : MonoBehaviour
 {
+    [SerializeField] Animator cauldronAnimator;
     [SerializeField] ParticleSystem cauldronParticlesSmoke;
-
     [SerializeField] AudioSource cauldronAudioSource;
     [SerializeField] AudioClip cauldronGood;
     [SerializeField] AudioClip cauldronBad;
@@ -30,7 +30,7 @@ public class CauldronManager : MonoBehaviour
             for (var i = 0; i < recipe.Length; i++)
             {
                 var ingredient = recipe[i];
-                Debug.Log("need: " + ingredient.ingredientType + " in " + ingredient.ingredientColor);
+                //Debug.Log("need: " + ingredient.ingredientType + " in " + ingredient.ingredientColor);
                 var newIngredient = Instantiate(ingredientUIPrefab, recipeUI);
                 var newIngredientUI = newIngredient.GetComponent<IngredientUI>();
                 ingredientsUI.Add(newIngredientUI);
@@ -51,7 +51,8 @@ public class CauldronManager : MonoBehaviour
 		if(recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
 	        cauldronAudioSource.PlayOneShot(cauldronGood);
-            cauldronParticlesSmoke.Pause();
+            cauldronAnimator.Play("Happy");
+            cauldronParticlesSmoke.Stop();
 
             if (index < RecipeManager.instance.currentRecipeSize)
 			{
@@ -75,6 +76,7 @@ public class CauldronManager : MonoBehaviour
 		{
             CurseManager.instance.CurseAllPlayers(ingredient.curseType);
             cauldronAudioSource.PlayOneShot(cauldronBad);
+            cauldronAnimator.Play("Sad");
             cauldronParticlesSmoke.Play();
 
             CauldronFailed();
