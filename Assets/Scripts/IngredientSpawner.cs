@@ -108,12 +108,13 @@ public class IngredientSpawner : MonoBehaviour
 		currentBatch++;
 	}
 
-    void ThrowPickup()
+    public void ThrowPickup()
     {
         if (pickupFalls.Count > 0)
         {
-            pickupFalls[0].Throw();
-            pickupFalls.RemoveAt(0);
+			int random = Random.Range(0, pickupFalls.Count);
+            pickupFalls[random].Throw();
+            pickupFalls.RemoveAt(random);
         }
     }
 

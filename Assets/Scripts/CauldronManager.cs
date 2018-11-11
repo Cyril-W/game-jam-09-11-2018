@@ -23,6 +23,7 @@ public class CauldronManager : MonoBehaviour
 
     public void SetCauldronRecipe(PlantEffect.Ingredient[] newRecipe)
     {
+
         if (newRecipe.Length > 0)
         {
             recipe = newRecipe;
@@ -43,7 +44,8 @@ public class CauldronManager : MonoBehaviour
 
             recipeAnimator.SetTrigger("Open");
         }
-    }
+		StartCoroutine(NewBatch());
+	}
 
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
 	public void CheckPlant(PlantEffect.Ingredient ingredient)
@@ -96,4 +98,16 @@ public class CauldronManager : MonoBehaviour
         SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
         index = 0;
     }
+
+	public IEnumerator NewBatch()
+	{
+		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
+		spawner.SpawnIngredients();
+		for(int i = 0; i< spawner.ingredientsByBatch; i++)
+		{
+			spawner.ThrowPickup();
+			yield return new WaitForSeconds(0.1f);
+
+		}
+	}
 }
