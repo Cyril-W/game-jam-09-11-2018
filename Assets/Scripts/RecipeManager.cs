@@ -52,8 +52,12 @@ public class RecipeManager : MonoBehaviour
 
         var ingredientTypes = System.Enum.GetNames(typeof(PlantEffect.Ingredient.IngredientType)).Length;
         int randomType = Random.Range(0, ingredientTypes);
-
         ingredient.ingredientType = (PlantEffect.Ingredient.IngredientType)randomType;
+
+        var curseTypes = System.Enum.GetNames(typeof(CurseManager.CurseType)).Length;
+        CurseManager.CurseType randomCurse = (CurseManager.CurseType)Random.Range(0, curseTypes);
+        ingredient.curseType = randomCurse;
+
 		return ingredient;
 	}
 

@@ -46,7 +46,10 @@ public class PlantHolding : MonoBehaviour
     {
         foreach (var animator in charactersAnimator)
         {
-            animator.SetTrigger("Take");
+            if (animator.gameObject.activeSelf)
+            {
+                animator.SetTrigger("Take");
+            }
         }
     }
 
@@ -54,7 +57,10 @@ public class PlantHolding : MonoBehaviour
     {
         foreach (var animator in charactersAnimator)
         {
-            animator.SetBool("IsWalking", newIsWalking);
+            if (animator.gameObject.activeSelf)
+            {
+                animator.SetBool("IsWalking", newIsWalking);
+            }
         }
     }
 
@@ -65,7 +71,7 @@ public class PlantHolding : MonoBehaviour
 			other.GetComponent<SphereCollider>().enabled = false;
 			if (currentlyHeldIngredient != null)
 			{
-				CurseManager.instance.UnCursePlayer(gameObject, currentlyHeldIngredient.GetIngredient().curseType);
+				CurseManager.instance.UnCursePlayer(gameObject);
 				currentlyHeldIngredient.transform.localPosition = Vector3.zero;
 				currentlyHeldIngredient.transform.parent = null;
 				StartCoroutine(ActivateColliderAfter(currentlyHeldIngredient.gameObject));

@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: f381898cf7e299f4d895016daea2823e
+guid: 29f2166e3bac50041adf05c95f48803f
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: dolls_voodoo
+    100002: sourrins_brune
     400000: //RootNode
-    400002: dolls_voodoo
-    2100000: dolls_voodooMat
-    2300000: dolls_voodoo
-    3300000: dolls_voodoo
-    4300000: dolls_voodoo
+    400002: sourrins_brune
+    2100000: sourrins_bruneMat
+    2300000: sourrins_brune
+    3300000: sourrins_brune
+    4300000: sourrins_brune
   externalObjects: {}
   materials:
     importMaterials: 1
