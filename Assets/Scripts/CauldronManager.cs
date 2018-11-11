@@ -141,6 +141,7 @@ public class CauldronManager : MonoBehaviour
 		PlantHolding[] players = FindObjectsOfType<PlantHolding>();
 		foreach (PlantHolding player in players)
 		{
+			CurseManager.instance.UnCursePlayer(player.gameObject);
 			player.ResetAnimation();
 			player.currentlyHeldIngredient = null;
 		}

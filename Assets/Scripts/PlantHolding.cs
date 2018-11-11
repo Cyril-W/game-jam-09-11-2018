@@ -156,6 +156,10 @@ public class PlantHolding : MonoBehaviour
 	IEnumerator ActivateColliderAfter(GameObject pickup)
 	{
 		yield return new WaitForSeconds(pickupCooldown);
-		pickup.GetComponent<SphereCollider>().enabled = true;
+		if(pickup != null)
+		{
+					pickup.GetComponent<SphereCollider>().enabled = true;
+
+		}
 	}
 }
