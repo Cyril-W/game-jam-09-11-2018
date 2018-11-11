@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Movement Modifications")]
 	public float speedMult = 1f;
-	public float dirMult = 1f;
-	public bool useInertia;
+	public float hDirMult = 1f;
+    public float vDirMult = 1f;
+    public bool useInertia;
 
     [Header("Change Player Model")]
     public Transform model;
@@ -36,9 +37,9 @@ public class PlayerMovement : MonoBehaviour
 		if (useInertia)
 		{
 			movement = new Vector3(
-			hInputValue * dirMult * speedMult * acceleration,
+			hInputValue * hDirMult * speedMult * acceleration,
 			rigid.velocity.y,
-			vInputValue * dirMult * speedMult * acceleration);
+			vInputValue * vDirMult * speedMult * acceleration);
 
 			Vector3 deltaV = movement - rigid.velocity;
 			Vector3 accel = deltaV / Time.deltaTime;
@@ -51,9 +52,9 @@ public class PlayerMovement : MonoBehaviour
 		else
 		{
 			movement = new Vector3(
-			hInputValue * dirMult * speedMult * moveSpeed,
+			hInputValue * hDirMult * speedMult * moveSpeed,
 			rigid.velocity.y,
-			vInputValue * dirMult * speedMult * moveSpeed);
+			vInputValue * vDirMult * speedMult * moveSpeed);
 
 			rigid.velocity = movement;
 		}

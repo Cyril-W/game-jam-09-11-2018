@@ -75,7 +75,7 @@ public class PlantEffect : MonoBehaviour
 
 	public void OnPlantDropInCauldron (GameObject player)
 	{
-        CurseManager.instance.UnCursePlayer(player, ingredient.curseType);
+        CurseManager.instance.UnCursePlayer(player);
 		cauldron.CheckPlant(ingredient);
         // play anim then destroy
 		Destroy(gameObject);
