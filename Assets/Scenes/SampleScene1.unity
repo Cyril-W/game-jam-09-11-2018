@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0
-  timeBeforeNextRecipe: 10
+  timeBeforeNextRecipe: 40
   cauldronManager: {fileID: 265500207}
   hourglass: {fileID: 1616997370}
   hourglassUp: {fileID: 348986056}

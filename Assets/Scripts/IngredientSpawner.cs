@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour
 {
+	#region Singleton
+	public static IngredientSpawner instance;
+	private void Awake ()
+	{
+		instance = this;
+	}
+	#endregion
 	public GameObject pickup;
 	public int ingredientsByBatch = 5;
 	public int currentBatch = 0;
@@ -63,7 +70,7 @@ public class IngredientSpawner : MonoBehaviour
 		return targetSpawnPos;
 	}*/
 
-    Vector3 GetRandomPointInBounds(Bounds bounds)
+    public Vector3 GetRandomPointInBounds(Bounds bounds)
     {
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),

@@ -51,7 +51,6 @@ public class CauldronManager : MonoBehaviour
 
             recipeAnimator.SetTrigger("Open");
         }
-		StartCoroutine(NewBatch());
 	}
 
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
@@ -68,7 +67,8 @@ public class CauldronManager : MonoBehaviour
                 ingredientsUI[index].ToggleSelected();
                 index++;
                 ingredientsUI[index].ToggleSelected();
-            }
+				StartCoroutine(NewBatch());
+			}
 			else
 			{
 				index = 0;
@@ -91,7 +91,9 @@ public class CauldronManager : MonoBehaviour
             cauldronParticlesSmoke.Play();
 
             CauldronFailed();
-        }
+			StartCoroutine(NewBatch());
+		}
+		
 	}
 
 	public IEnumerator DisablePlayerMovement(PlayerMovement player)
@@ -152,7 +154,15 @@ public class CauldronManager : MonoBehaviour
 
 	public IEnumerator MoveCauldron (Vector3 targetPos)
 	{
+		do
+		{
+			Vector3 pos = Vector3.MoveTowards(transform.position, targetPos, 2f);
+			transform.position = pos;
+			yield return null;
+		}
+		while (Vector3.Distance(transform.position, targetPos) > 0.1f);
 
+		StartCoroutine(NewBatch());
 	}
 
 	public IEnumerator NewBatch()

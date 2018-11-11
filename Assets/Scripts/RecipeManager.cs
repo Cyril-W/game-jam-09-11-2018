@@ -27,6 +27,7 @@ public class RecipeManager : MonoBehaviour
 		currentRecipeSize = startRecipeSize;
 		cauldron = FindObjectOfType<CauldronManager>();
 		cauldron.SetCauldronRecipe(GenerateRandomRecipe());
+		cauldron.StartCoroutine(cauldron.NewBatch());
 	}
 
 	public void IncreaseRecipeSize (bool loadNewRecipe)
@@ -34,7 +35,9 @@ public class RecipeManager : MonoBehaviour
 		currentRecipeSize += recipeSizeIncByLevel;
 		if(loadNewRecipe)
 		{
+			IngredientSpawner ingSpawner = IngredientSpawner.instance;
 			cauldron.SetCauldronRecipe(GenerateRandomRecipe());
+			cauldron.StartCoroutine(cauldron.MoveCauldron(ingSpawner.GetRandomPointInBounds(ingSpawner.targetsSpawningZone.bounds)));
 		}
 	}
 
