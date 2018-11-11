@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1524827351546304
 GameObject:
   m_ObjectHideFlags: 1
@@ -2461,7 +2461,8 @@ MonoBehaviour:
   hInput: Horizontal4
   vInput: Vertical4
   speedMult: 1
-  dirMult: 1
+  hDirMult: 1
+  vDirMult: 1
   useInertia: 0
   model: {fileID: 4307350746273748}
   plantHolding: {fileID: 114620982138027154}

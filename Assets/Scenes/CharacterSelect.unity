@@ -481,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06968d4b7c14e014d889e0270ae3203a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneIndexToLoad: 1
   hInputs:
   - Horizontal1
   - Horizontal2
@@ -501,6 +502,7 @@ MonoBehaviour:
   - {fileID: 1003595566}
   - {fileID: 1585141405}
   - {fileID: 2128962170}
+  startButton: {fileID: 1932445551}
 --- !u!224 &378397112 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224321877765007972, guid: e3e9371199d19c04b97dcc66eb1a7c5d,
@@ -1244,6 +1246,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 794879370}
   m_CullTransparentMesh: 0
+--- !u!1001 &800971796
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886384328390480, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 075b3c7c74f2d454a96defd5185cae76, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &805475745
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,34 +3064,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254703344}
   m_Mesh: {fileID: 4300000, guid: b2f124eca6e2d0247b5a6c15d2805985, type: 3}
---- !u!1 &1282209480
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1282209481}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1282209481
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1282209480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1286919878
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,7 +4478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1932445552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4520,7 +4536,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1932445554}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 368756657}
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1932445554

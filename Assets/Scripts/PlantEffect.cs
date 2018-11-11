@@ -23,7 +23,7 @@ public class PlantEffect : MonoBehaviour
     [SerializeField] GameObject[] legs;
     [SerializeField] GameObject[] dolls;
 
-    public Ingredient ingredient;
+    Ingredient ingredient;
     CauldronManager cauldron;
 
 	private void Awake ()

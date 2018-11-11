@@ -15,7 +15,7 @@ public class PlantHolding : MonoBehaviour
     int currentPlayerModel = 0;
 
     void Update()
-    {
+    {/*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             UpdatePlayerModel(currentPlayerModel, false);
@@ -34,10 +34,10 @@ public class PlantHolding : MonoBehaviour
                 currentPlayerModel = charactersAnimator.Length - 1;
             }
             UpdatePlayerModel(currentPlayerModel, true);
-        }
+        }*/
     }
 
-    void UpdatePlayerModel(int modelIndex, bool isActive)
+    public void UpdatePlayerModel(int modelIndex, bool isActive)
     {
         charactersAnimator[modelIndex].gameObject.SetActive(isActive);
     }

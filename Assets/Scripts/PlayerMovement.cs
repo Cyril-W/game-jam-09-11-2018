@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform model;
     public PlantHolding plantHolding;
 
+	public Vector3 spawnPosition;
+	public Vector3 offsetOnRespawn = new Vector3(0f, 10f, 0f);
+
     Rigidbody rigid;
 
 	// Use this for initialization

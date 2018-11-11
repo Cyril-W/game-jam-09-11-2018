@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSelectManagement : MonoBehaviour
 {
+	public int sceneIndexToLoad = 1;
 	public string[] hInputs = new string[4];
 	public string[] vInputs = new string[4];
 
@@ -15,13 +17,16 @@ public class PlayerSelectManagement : MonoBehaviour
 	bool[] selectedPlayers = {false, false, false, false};
 	int[] modelIndexes = { 0, 1, 2, 3 };
 	int playerAmount;
+	int finalPlayerAmount = 0;
+
+	PlayerManagement playerMgr;
 	// Use this for initialization
 
 	void DisplayCharacter(int index)
 	{
 		if(selectedPlayers[index] == false)
 		{
-			GameObject characterModel = Instantiate(characterModels[modelIndexes[index]], slots[index].position + Vector3.up, Quaternion.identity);
+			GameObject characterModel = Instantiate(characterModels[modelIndexes[index]], slots[index].position + Vector3.up, characterModels[modelIndexes[index]].transform.rotation);
 			spawnedCharacters[index] = characterModel;
 			playerAmount++;
 			selectedPlayers[index] = true;
@@ -76,8 +81,34 @@ public class PlayerSelectManagement : MonoBehaviour
 			startButton.SetActive(available);
 		}
 	}
+
+	public void StartGame()
+	{
+		AffectPlayers();
+		SceneManager.LoadScene(sceneIndexToLoad);
+	}
+
+	void AffectPlayers()
+	{
+		finalPlayerAmount = 0;
+		playerMgr.InitPlayerList();
+		for(int i = 0; i<spawnedCharacters.Length; i++)
+		{
+			if(spawnedCharacters[i] != null)
+			{
+				PlayerManagement.Player newPlayer = new PlayerManagement.Player(); ;
+				newPlayer.hInput = hInputs[i];
+				newPlayer.vInput = vInputs[i];
+				newPlayer.playerSkin = modelIndexes[i];
+				playerMgr.playerList.Add(newPlayer);
+				finalPlayerAmount++;
+			}
+		}
+		playerMgr.playerAmount = finalPlayerAmount;
+	}
 	void Start ()
 	{
+		playerMgr = FindObjectOfType<PlayerManagement>();
 	}
 	
 	// Update is called once per frame
@@ -95,7 +126,6 @@ public class PlayerSelectManagement : MonoBehaviour
 				SwitchCharacterModel(i, Input.GetAxis(hInputs[i]));
 			}
 		}
-
 		if(playerAmount > 0)
 		{
 			StartGameButton(true);
