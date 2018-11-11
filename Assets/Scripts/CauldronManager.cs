@@ -31,6 +31,7 @@ public class CauldronManager : MonoBehaviour
 
 	public void SetCauldronRecipe (PlantEffect.Ingredient[] newRecipe)
 	{
+		Debug.Log("New Recipe Length" + newRecipe.Length);
 
 		if (newRecipe.Length > 0)
 		{
@@ -56,13 +57,15 @@ public class CauldronManager : MonoBehaviour
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
 	public void CheckPlant (PlantEffect.Ingredient ingredient)
 	{
+		//Debug.Log("Index : " + index);
+		//Debug.Log("Recipe Size : " + RecipeManager.instance.currentRecipeSize);
 		if (recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
 			cauldronAudioSource.PlayOneShot(cauldronGood);
 			cauldronAnimator.Play("Happy");
 			cauldronParticlesSmoke.Stop();
 
-			if (index < RecipeManager.instance.currentRecipeSize)
+			if (index < RecipeManager.instance.currentRecipeSize-1)
 			{
 				ingredientsUI[index].ToggleSelected();
 				index++;
@@ -80,8 +83,12 @@ public class CauldronManager : MonoBehaviour
 				ingredientsUI.Clear();
 				recipeAnimator.SetTrigger("Close");
 				cauldronAudioSource.PlayOneShot(cauldronApplause);
+				//Debug.Log("Increasing Recipe Size");
 				RecipeManager.instance.IncreaseRecipeSize(true);
+				//StartCoroutine(NewBatch());
+				//StartCoroutine(MoveCauldron(IngredientSpawner.instance.GetRandomPointInBounds(IngredientSpawner.instance.targetsSpawningZone.bounds)));
 			}
+
 		}
 		else
 		{
@@ -151,19 +158,27 @@ public class CauldronManager : MonoBehaviour
 
 	public IEnumerator MoveCauldron (Vector3 targetPos)
 	{
+		//Debug.Log("Moving Initialized");
+		//Debug.Log("Target Pos : " + targetPos);
+		//Debug.Log("TransformPos : " + transform.position);
 		do
 		{
-			Vector3 pos = Vector3.MoveTowards(transform.position, targetPos, 2f);
-			transform.position = pos;
+			//Debug.Log("TransformPos : " + transform.position);
+			//Debug.Log("Moving Cauldron");
+			Vector3 dir = targetPos - transform.position;
+			dir.y = 0f;
+			transform.Translate(dir * 500f * Time.deltaTime);
 			yield return null;
 		}
 		while (Vector3.Distance(transform.position, targetPos) > 0.1f);
+		//Debug.Log("Moving Over");
 
 		StartCoroutine(NewBatch());
 	}
 
 	public IEnumerator NewBatch ()
 	{
+		//Debug.Log("New Batch !");
 		DestroyAllItems();
 		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
 		spawner.SpawnIngredients();

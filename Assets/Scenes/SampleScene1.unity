@@ -3379,6 +3379,11 @@ Prefab:
       propertyPath: explosionRange
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114503246328817646, guid: f97fdb58dfb20d942ac532b7e3f24832,
+        type: 2}
+      propertyPath: startRecipeSize
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f97fdb58dfb20d942ac532b7e3f24832, type: 2}
   m_IsPrefabAsset: 0

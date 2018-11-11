@@ -35,7 +35,8 @@ public class RecipeManager : MonoBehaviour
 		currentRecipeSize += recipeSizeIncByLevel;
 		if(loadNewRecipe)
 		{
-			IngredientSpawner ingSpawner = IngredientSpawner.instance;
+			//IngredientSpawner ingSpawner = IngredientSpawner.instance;
+			Debug.Log("Generate new Random Recipe");
 			cauldron.SetCauldronRecipe(GenerateRandomRecipe());
 			//cauldron.StartCoroutine(cauldron.MoveCauldron(ingSpawner.GetRandomPointInBounds(ingSpawner.targetsSpawningZone.bounds)));
 		}
