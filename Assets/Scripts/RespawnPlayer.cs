@@ -7,6 +7,8 @@ public class RespawnPlayer : MonoBehaviour {
     [SerializeField] AudioSource audioSource;
     [SerializeField] float secondsToDestroyLight = 3f;
     [SerializeField] GameObject resurrectionLight;
+    [SerializeField] AudioClip falling;
+    [SerializeField] AudioClip resurecting;
 
     void OnTriggerEnter(Collider other)
     {
@@ -14,7 +16,7 @@ public class RespawnPlayer : MonoBehaviour {
         {
             var playerMovement = other.GetComponent<PlayerMovement>();
             playerMovement.enabled = false;
-            audioSource.PlayOneShot(audioSource.clip);
+            audioSource.PlayOneShot(falling);
             StartCoroutine(RespawnPlayerAbove(playerMovement));
         }
     }
@@ -23,6 +25,7 @@ public class RespawnPlayer : MonoBehaviour {
     {
         yield return new WaitForSeconds(secondsToRespawn);
         var newPosition = playerMovement.ResetPosition();
+        audioSource.PlayOneShot(resurecting);
         var newLight = Instantiate(resurrectionLight, newPosition, Quaternion.identity);
         Destroy(newLight, secondsToDestroyLight);
         playerMovement.enabled = true;
