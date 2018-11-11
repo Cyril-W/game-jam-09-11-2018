@@ -9,7 +9,56 @@ public class PlantHolding : MonoBehaviour
 	public float pickupCooldown = 1f;
 	PlantEffect currentlyHeldIngredient;
 
-	private void OnTriggerEnter (Collider other)
+    [SerializeField] Animator[] charactersAnimator;
+    [SerializeField] AudioSource audioSourceThrow;
+
+    int currentPlayerModel = 0;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            UpdatePlayerModel(currentPlayerModel, false);
+            currentPlayerModel++;
+            if (currentPlayerModel >= charactersAnimator.Length)
+            {
+                currentPlayerModel = 0;
+            }
+            UpdatePlayerModel(currentPlayerModel, true);
+        } else if (Input.GetKeyDown(KeyCode.S))
+        {
+            UpdatePlayerModel(currentPlayerModel, false);
+            currentPlayerModel--;
+            if (currentPlayerModel < 0)
+            {
+                currentPlayerModel = charactersAnimator.Length - 1;
+            }
+            UpdatePlayerModel(currentPlayerModel, true);
+        }
+    }
+
+    void UpdatePlayerModel(int modelIndex, bool isActive)
+    {
+        charactersAnimator[modelIndex].gameObject.SetActive(isActive);
+    }
+
+    void SetTrigger()
+    {
+        foreach (var animator in charactersAnimator)
+        {
+            animator.SetTrigger("Take");
+        }
+    }
+
+    public void SetIsWalking(bool newIsWalking)
+    {
+        foreach (var animator in charactersAnimator)
+        {
+            animator.SetBool("IsWalking", newIsWalking);
+        }
+    }
+
+    void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == ingredientTag)
 		{
@@ -20,18 +69,21 @@ public class PlantHolding : MonoBehaviour
 				currentlyHeldIngredient.transform.localPosition = Vector3.zero;
 				currentlyHeldIngredient.transform.parent = null;
 				StartCoroutine(ActivateColliderAfter(currentlyHeldIngredient.gameObject));
-			}
+			} else
+            {
+                SetTrigger();
+            }
 			currentlyHeldIngredient = other.GetComponent<PlantEffect>();
 			currentlyHeldIngredient.OnPlantCollect(gameObject);
-		}
-		if (other.tag == cauldronTag)
+            audioSourceThrow.PlayOneShot(audioSourceThrow.clip);            
+        }
+        else if (other.tag == cauldronTag && currentlyHeldIngredient != null)
 		{
-			if (currentlyHeldIngredient != null)
-			{
-				currentlyHeldIngredient.OnPlantDropInCauldron(gameObject);
-				currentlyHeldIngredient = null;
-			}
-		}
+			currentlyHeldIngredient.OnPlantDropInCauldron(gameObject);
+			currentlyHeldIngredient = null;
+            audioSourceThrow.PlayOneShot(audioSourceThrow.clip);
+            SetTrigger();
+        }
 	}
 
 	IEnumerator ActivateColliderAfter(GameObject pickup)

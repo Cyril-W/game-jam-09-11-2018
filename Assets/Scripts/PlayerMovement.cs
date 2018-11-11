@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Change Player Model")]
     public Transform model;
+    public PlantHolding plantHolding;
 
     Rigidbody rigid;
 
@@ -60,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
         if (movement.x != 0 || movement.z != 0)
         {
             model.localRotation = Quaternion.LookRotation(movement);
+            plantHolding.SetIsWalking(true);
+        } else
+        {
+            plantHolding.SetIsWalking(false);
         }
 	}
 
