@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class CauldronManager : MonoBehaviour
 {
-    [SerializeField] Animator cauldronAnimator;
-    [SerializeField] ParticleSystem cauldronParticlesSmoke;
-    [SerializeField] AudioSource cauldronAudioSource;
-    [SerializeField] AudioClip cauldronGood;
-    [SerializeField] AudioClip cauldronBad;
-    [SerializeField] AudioClip cauldronApplause;
+	[SerializeField] Animator cauldronAnimator;
+	[SerializeField] ParticleSystem cauldronParticlesSmoke;
+	[SerializeField] AudioSource cauldronAudioSource;
+	[SerializeField] AudioClip cauldronGood;
+	[SerializeField] AudioClip cauldronBad;
+	[SerializeField] AudioClip cauldronApplause;
 	[SerializeField] Animator cameraAnimator;
 
 	[Space]
 
-    [SerializeField] Animator recipeAnimator;
-    [SerializeField] Transform recipeUI;
-    [SerializeField] Transform ingredientUIPrefab;
+	[SerializeField] Animator recipeAnimator;
+	[SerializeField] Transform recipeUI;
+	[SerializeField] Transform ingredientUIPrefab;
 
 	[SerializeField] float explosionRange = 5f;
 	[SerializeField] LayerMask explosionMask;
@@ -27,112 +27,112 @@ public class CauldronManager : MonoBehaviour
 
 	int index = 0;
 	PlantEffect.Ingredient[] recipe;
-    List<IngredientUI> ingredientsUI = new List<IngredientUI>();
+	List<IngredientUI> ingredientsUI = new List<IngredientUI>();
 
-    public void SetCauldronRecipe(PlantEffect.Ingredient[] newRecipe)
-    {
+	public void SetCauldronRecipe (PlantEffect.Ingredient[] newRecipe)
+	{
 
-        if (newRecipe.Length > 0)
-        {
-            recipe = newRecipe;
+		if (newRecipe.Length > 0)
+		{
+			recipe = newRecipe;
 
-            for (var i = 0; i < recipe.Length; i++)
-            {
-                var ingredient = recipe[i];
-                var newIngredient = Instantiate(ingredientUIPrefab, recipeUI);
-                var newIngredientUI = newIngredient.GetComponent<IngredientUI>();
-                ingredientsUI.Add(newIngredientUI);
-                newIngredientUI.DisplayIngredient(ingredient);
-                if (i == 0)
-                {
-                    newIngredientUI.ToggleSelected();
-                }
-            }
+			for (var i = 0; i < recipe.Length; i++)
+			{
+				var ingredient = recipe[i];
+				var newIngredient = Instantiate(ingredientUIPrefab, recipeUI);
+				var newIngredientUI = newIngredient.GetComponent<IngredientUI>();
+				ingredientsUI.Add(newIngredientUI);
+				newIngredientUI.DisplayIngredient(ingredient);
+				if (i == 0)
+				{
+					newIngredientUI.ToggleSelected();
+				}
+			}
 
-            recipeAnimator.SetTrigger("Open");
-        }
+			recipeAnimator.SetTrigger("Open");
+		}
 	}
 
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
-	public void CheckPlant(PlantEffect.Ingredient ingredient)
+	public void CheckPlant (PlantEffect.Ingredient ingredient)
 	{
-		if(recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
+		if (recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
-	        cauldronAudioSource.PlayOneShot(cauldronGood);
-            cauldronAnimator.Play("Happy");
-            cauldronParticlesSmoke.Stop();
+			cauldronAudioSource.PlayOneShot(cauldronGood);
+			cauldronAnimator.Play("Happy");
+			cauldronParticlesSmoke.Stop();
 
-            if (index < RecipeManager.instance.currentRecipeSize)
+			if (index < RecipeManager.instance.currentRecipeSize)
 			{
-                ingredientsUI[index].ToggleSelected();
-                index++;
-                ingredientsUI[index].ToggleSelected();
-				StartCoroutine(NewBatch());
+				ingredientsUI[index].ToggleSelected();
+				index++;
+				ingredientsUI[index].ToggleSelected();
+				//StartCoroutine(NewBatch());
 			}
 			else
 			{
 				index = 0;
 
 				foreach (var item in ingredientsUI)
-                {
-                    Destroy(item.gameObject);
-                }
-                ingredientsUI.Clear();
-                recipeAnimator.SetTrigger("Close");
-                cauldronAudioSource.PlayOneShot(cauldronApplause);
-                RecipeManager.instance.IncreaseRecipeSize(true);
+				{
+					Destroy(item.gameObject);
+				}
+				ingredientsUI.Clear();
+				recipeAnimator.SetTrigger("Close");
+				cauldronAudioSource.PlayOneShot(cauldronApplause);
+				RecipeManager.instance.IncreaseRecipeSize(true);
 			}
 		}
 		else
 		{
-            CurseManager.instance.DoomPlayers();
-            cauldronAudioSource.PlayOneShot(cauldronBad);
-            cauldronAnimator.Play("Sad");
-            cauldronParticlesSmoke.Play();
+			CurseManager.instance.DoomPlayers();
+			cauldronAudioSource.PlayOneShot(cauldronBad);
+			cauldronAnimator.Play("Sad");
+			cauldronParticlesSmoke.Play();
 
-            CauldronFailed();
-			StartCoroutine(NewBatch());
+			CauldronFailed();
+			//StartCoroutine(NewBatch());
 		}
-		
+		StartCoroutine(NewBatch());
 	}
 
-	public IEnumerator DisablePlayerMovement(PlayerMovement player)
+	public IEnumerator DisablePlayerMovement (PlayerMovement player)
 	{
 		player.enabled = false;
 		yield return new WaitForSeconds(1f);
 		player.enabled = true;
 	}
-	
-    public void CauldronFailed()
-    {
-		if(cameraAnimator != null)
+
+	public void CauldronFailed ()
+	{
+		if (cameraAnimator != null)
 		{
 			cameraAnimator.SetTrigger("Shake1");
 		}
 
 		Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, explosionMask);
-		foreach(Collider col in players)
+		foreach (Collider col in players)
 		{
 			Rigidbody rigid = col.GetComponent<Rigidbody>();
 			PlayerMovement playerMvt = col.GetComponent<PlayerMovement>();
-			if(playerMvt != null && rigid != null)
+			if (playerMvt != null && rigid != null)
 			{
 				StartCoroutine(DisablePlayerMovement(playerMvt));
 				rigid.AddExplosionForce(explosionForce, transform.position, explosionRange, upwardsModifier);
 			}
 		}
 
-        foreach (var item in ingredientsUI)
-        {
-            Destroy(item.gameObject);
-        }
-        ingredientsUI.Clear();
-        recipeAnimator.SetTrigger("Close");      
-        SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
-        index = 0;
-    }
+		foreach (var item in ingredientsUI)
+		{
+			Destroy(item.gameObject);
+		}
+		ingredientsUI.Clear();
+		recipeAnimator.SetTrigger("Close");
+		SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
+		index = 0;
+	}
 
-	void DestroyAllItems()
+	void DestroyAllItems ()
 	{
 		PlantEffect[] plants = FindObjectsOfType<PlantEffect>();
 		foreach (PlantEffect plant in plants)
@@ -143,12 +143,9 @@ public class CauldronManager : MonoBehaviour
 		PlantHolding[] players = FindObjectsOfType<PlantHolding>();
 		foreach (PlantHolding player in players)
 		{
-			if(player.currentlyHeldIngredient != null)
-			{
-				CurseManager.instance.UnCursePlayer(player.gameObject);
-				player.ResetAnimation();
-				player.currentlyHeldIngredient = null;
-			}		
+			CurseManager.instance.UnCursePlayer(player.gameObject);
+			player.ResetAnimation();
+			player.currentlyHeldIngredient = null;
 		}
 	}
 
@@ -165,12 +162,12 @@ public class CauldronManager : MonoBehaviour
 		StartCoroutine(NewBatch());
 	}
 
-	public IEnumerator NewBatch()
+	public IEnumerator NewBatch ()
 	{
 		DestroyAllItems();
 		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
 		spawner.SpawnIngredients();
-		for(int i = 0; i< spawner.ingredientsByBatch; i++)
+		for (int i = 0; i < spawner.ingredientsByBatch; i++)
 		{
 			spawner.ThrowPickup();
 			yield return new WaitForSeconds(0.1f);

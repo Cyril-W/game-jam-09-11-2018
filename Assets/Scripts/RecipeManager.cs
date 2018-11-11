@@ -37,7 +37,7 @@ public class RecipeManager : MonoBehaviour
 		{
 			IngredientSpawner ingSpawner = IngredientSpawner.instance;
 			cauldron.SetCauldronRecipe(GenerateRandomRecipe());
-			cauldron.StartCoroutine(cauldron.MoveCauldron(ingSpawner.GetRandomPointInBounds(ingSpawner.targetsSpawningZone.bounds)));
+			//cauldron.StartCoroutine(cauldron.MoveCauldron(ingSpawner.GetRandomPointInBounds(ingSpawner.targetsSpawningZone.bounds)));
 		}
 	}
 
