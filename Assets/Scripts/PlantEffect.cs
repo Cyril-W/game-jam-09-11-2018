@@ -68,7 +68,6 @@ public class PlantEffect : MonoBehaviour
 	public void OnPlantCollect(GameObject player)
 	{
 		CurseManager.instance.CursePlayer(player, ingredient.curseType);
-		// Place Item on top of player + play anim
 		transform.parent = player.transform;
 		transform.localPosition = offsetFromPlayer;
 	}

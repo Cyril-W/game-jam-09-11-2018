@@ -12,6 +12,15 @@ public class PlantHolding : MonoBehaviour
     [SerializeField] Animator[] charactersAnimator;
     [SerializeField] AudioSource audioSourceThrow;
 
+    [Space]
+
+    [SerializeField] GameObject particleCurseSlippery;
+    [SerializeField] GameObject particleCurseInvertMovementX;
+    [SerializeField] GameObject particleCurseInvertMovementY;
+    [SerializeField] GameObject particleCurseInvertMovements;
+    [SerializeField] GameObject particleCurseMoveSpeedIncrease;
+    [SerializeField] GameObject particleCurseMoveSpeedDecrease;
+
     int currentPlayerModel = 0;
 
     void Update()
@@ -81,16 +90,56 @@ public class PlantHolding : MonoBehaviour
             }
 			currentlyHeldIngredient = other.GetComponent<PlantEffect>();
 			currentlyHeldIngredient.OnPlantCollect(gameObject);
+            UpdateParticleCurse(currentlyHeldIngredient.GetIngredient());
             audioSourceThrow.PlayOneShot(audioSourceThrow.clip);            
         }
         else if (other.tag == cauldronTag && currentlyHeldIngredient != null)
 		{
 			currentlyHeldIngredient.OnPlantDropInCauldron(gameObject);
 			currentlyHeldIngredient = null;
+            DisableAllCurses();
             audioSourceThrow.PlayOneShot(audioSourceThrow.clip);
             SetTrigger();
         }
 	}
+
+    void UpdateParticleCurse(PlantEffect.Ingredient currentlyHeldIngredient)
+    {
+        DisableAllCurses();
+        switch (currentlyHeldIngredient.curseType)
+        {
+            case CurseManager.CurseType.Slippery:
+                particleCurseSlippery.SetActive(true);
+                break;
+            case CurseManager.CurseType.InvertMovementX:
+                particleCurseInvertMovementX.SetActive(true);
+                break;
+            case CurseManager.CurseType.InvertMovementY:
+                particleCurseInvertMovementY.SetActive(true);
+                break;
+            case CurseManager.CurseType.InvertMovements:
+                particleCurseInvertMovements.SetActive(true);
+                break;
+            case CurseManager.CurseType.MoveSpeedIncrease:
+                particleCurseMoveSpeedIncrease.SetActive(true);
+                break;
+            case CurseManager.CurseType.MoveSpeedDecrease:
+                particleCurseMoveSpeedDecrease.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void DisableAllCurses()
+    {
+        particleCurseSlippery.SetActive(false);
+        particleCurseInvertMovementX.SetActive(false);
+        particleCurseInvertMovementY.SetActive(false);
+        particleCurseInvertMovements.SetActive(false);
+        particleCurseMoveSpeedIncrease.SetActive(false);
+        particleCurseMoveSpeedDecrease.SetActive(false);
+    }
 
 	IEnumerator ActivateColliderAfter(GameObject pickup)
 	{
