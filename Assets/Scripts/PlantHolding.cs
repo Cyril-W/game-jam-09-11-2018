@@ -7,7 +7,7 @@ public class PlantHolding : MonoBehaviour
 	public string ingredientTag = "Ingredient";
 	public string cauldronTag = "Cauldron";
 	public float pickupCooldown = 1f;
-	PlantEffect currentlyHeldIngredient;
+	public PlantEffect currentlyHeldIngredient;
 
     [SerializeField] Animator[] charactersAnimator;
     [SerializeField] AudioSource audioSourceThrow;
@@ -62,7 +62,19 @@ public class PlantHolding : MonoBehaviour
         }
     }
 
-    public void SetIsWalking(bool newIsWalking)
+	public void ResetAnimation ()
+	{
+		foreach (var animator in charactersAnimator)
+		{
+			if (animator.gameObject.activeSelf)
+			{
+				animator.ResetTrigger("Take");
+				animator.Play("IdleHands");
+			}
+		}
+	}
+
+	public void SetIsWalking(bool newIsWalking)
     {
         foreach (var animator in charactersAnimator)
         {
