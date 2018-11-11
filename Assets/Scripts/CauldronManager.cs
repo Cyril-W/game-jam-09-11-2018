@@ -150,6 +150,11 @@ public class CauldronManager : MonoBehaviour
 		}
 	}
 
+	public IEnumerator MoveCauldron (Vector3 targetPos)
+	{
+
+	}
+
 	public IEnumerator NewBatch()
 	{
 		DestroyAllItems();

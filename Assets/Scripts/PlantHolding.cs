@@ -51,14 +51,15 @@ public class PlantHolding : MonoBehaviour
         charactersAnimator[modelIndex].gameObject.SetActive(isActive);
     }
 
-    void SetTrigger()
+    void SetTrigger(string trigger)
     {
         foreach (var animator in charactersAnimator)
         {
             if (animator.gameObject.activeSelf)
             {
-				Debug.Log("Set Trigger");
-				animator.SetTrigger("Take");
+				animator.ResetTrigger("Throw");
+				animator.ResetTrigger("Take");
+				animator.SetTrigger(trigger);
             }
         }
     }
@@ -69,7 +70,7 @@ public class PlantHolding : MonoBehaviour
 		{
 			if (animator.gameObject.activeSelf)
 			{
-
+				animator.ResetTrigger("Throw");
 				animator.ResetTrigger("Take");
 				animator.Play("IdleHands");
 			}
@@ -100,7 +101,7 @@ public class PlantHolding : MonoBehaviour
 				StartCoroutine(ActivateColliderAfter(currentlyHeldIngredient.gameObject));
 			} else
             {
-                SetTrigger();
+                SetTrigger("Take");
             }
 			currentlyHeldIngredient = other.GetComponent<PlantEffect>();
 			currentlyHeldIngredient.OnPlantCollect(gameObject);
@@ -113,8 +114,8 @@ public class PlantHolding : MonoBehaviour
 			currentlyHeldIngredient = null;
             DisableAllCurses();
             audioSourceThrow.PlayOneShot(audioSourceThrow.clip);
-            SetTrigger();
-        }
+			SetTrigger("Throw");
+		}
 	}
 
     void UpdateParticleCurse(PlantEffect.Ingredient currentlyHeldIngredient)

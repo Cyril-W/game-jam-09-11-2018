@@ -3359,6 +3359,26 @@ Prefab:
       propertyPath: lengthInSec
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114192354169268884, guid: f97fdb58dfb20d942ac532b7e3f24832,
+        type: 2}
+      propertyPath: explosionMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 114192354169268884, guid: f97fdb58dfb20d942ac532b7e3f24832,
+        type: 2}
+      propertyPath: explosionForce
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 114192354169268884, guid: f97fdb58dfb20d942ac532b7e3f24832,
+        type: 2}
+      propertyPath: upwardsModifier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114192354169268884, guid: f97fdb58dfb20d942ac532b7e3f24832,
+        type: 2}
+      propertyPath: explosionRange
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f97fdb58dfb20d942ac532b7e3f24832, type: 2}
   m_IsPrefabAsset: 0
