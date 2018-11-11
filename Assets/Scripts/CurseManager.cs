@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 
 public class CurseManager : MonoBehaviour
 {
     public enum CurseType { Slippery, InvertMovementX, InvertMovementY, InvertMovements, MoveSpeedIncrease, MoveSpeedDecrease }
+    public enum DoomType { Greyscale, Red }
 
     [SerializeField] GameObject curseSlippery;
     [SerializeField] GameObject curseInvertMovementX;
@@ -12,6 +13,14 @@ public class CurseManager : MonoBehaviour
     [SerializeField] GameObject curseInvertMovements;
     [SerializeField] GameObject curseMoveSpeedIncrease;
     [SerializeField] GameObject curseMoveSpeedDecrease;
+
+    [Space]
+
+    [SerializeField] float secondsToUndoom = 2f;
+    [SerializeField] PostProcessingBehaviour cameraProfile;
+    [SerializeField] PostProcessingProfile normalProfile;
+    [SerializeField] PostProcessingProfile greyscaleProfile;
+    [SerializeField] PostProcessingProfile redProfile;
 
     public void CursePlayer (GameObject player, CurseType curse)
 	{
@@ -49,10 +58,29 @@ public class CurseManager : MonoBehaviour
         }
     }
 
-	public void CurseAllPlayers (CurseType curse)
+	public void DoomPlayers ()
 	{
-		Debug.Log("All Players cursed with" + curse.ToString());
-	}
+        var dooms = System.Enum.GetNames(typeof(DoomType));
+        var doom = (DoomType)Random.Range(0, dooms.Length);
+        switch (doom)
+        {
+            case DoomType.Greyscale:
+                cameraProfile.profile = greyscaleProfile;
+                break;
+            case DoomType.Red:
+                cameraProfile.profile = redProfile;
+                break;
+            default:
+                break;
+        }
+        StartCoroutine(UndoomPlayers());
+    }
+
+    IEnumerator UndoomPlayers()
+    {
+        yield return new WaitForSeconds(secondsToUndoom);
+        cameraProfile.profile = normalProfile;
+    }
 
 	#region Singleton
 	public static CurseManager instance;
