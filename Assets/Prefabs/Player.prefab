@@ -2481,7 +2481,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e0e18f0f6ff428d41803ae373aa6b683, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9b264ec9abe162a4ba660c4cf8eb50e7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2653,6 +2653,7 @@ MonoBehaviour:
   ingredientTag: Ingredient
   cauldronTag: Cauldron
   pickupCooldown: 1
+  currentlyHeldIngredient: {fileID: 0}
   charactersAnimator:
   - {fileID: 95246222839371230}
   - {fileID: 95164264192147192}

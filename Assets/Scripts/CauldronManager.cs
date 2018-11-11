@@ -10,7 +10,7 @@ public class CauldronManager : MonoBehaviour
 	[SerializeField] AudioClip cauldronGood;
 	[SerializeField] AudioClip cauldronBad;
 	[SerializeField] AudioClip cauldronApplause;
-	[SerializeField] Animator cameraAnimator;
+	[SerializeField] CameraAnimator cameraAnimator;
 
 	[Space]
 
@@ -55,8 +55,6 @@ public class CauldronManager : MonoBehaviour
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
 	public void CheckPlant (PlantEffect.Ingredient ingredient)
 	{
-		//Debug.Log("Index : " + index);
-		//Debug.Log("Recipe Size : " + RecipeManager.instance.currentRecipeSize);
 		if (recipe[index].ingredientType == ingredient.ingredientType && recipe[index].ingredientColor == ingredient.ingredientColor)
 		{
 			cauldronAudioSource.PlayOneShot(cauldronGood);
@@ -68,7 +66,6 @@ public class CauldronManager : MonoBehaviour
 				ingredientsUI[index].ToggleSelected();
 				index++;
 				ingredientsUI[index].ToggleSelected();
-				//StartCoroutine(NewBatch());
 			}
 			else
 			{
@@ -81,10 +78,7 @@ public class CauldronManager : MonoBehaviour
 				ingredientsUI.Clear();
 				recipeAnimator.SetTrigger("Close");
 				cauldronAudioSource.PlayOneShot(cauldronApplause);
-				//Debug.Log("Increasing Recipe Size");
 				RecipeManager.instance.IncreaseRecipeSize(true);
-				//StartCoroutine(NewBatch());
-				//StartCoroutine(MoveCauldron(IngredientSpawner.instance.GetRandomPointInBounds(IngredientSpawner.instance.targetsSpawningZone.bounds)));
 			}
 
 		}
@@ -96,7 +90,6 @@ public class CauldronManager : MonoBehaviour
 			cauldronParticlesSmoke.Play();
 
 			CauldronFailed();
-			//StartCoroutine(NewBatch());
 		}
 		StartCoroutine(NewBatch());
 	}
@@ -112,7 +105,7 @@ public class CauldronManager : MonoBehaviour
 	{
 		if (cameraAnimator != null)
 		{
-			cameraAnimator.SetTrigger("Shake1");
+            cameraAnimator.Shake();
 		}
 
 		Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, explosionMask);
@@ -127,14 +120,14 @@ public class CauldronManager : MonoBehaviour
 			}
 		}
 
-		foreach (var item in ingredientsUI)
+		/*foreach (var item in ingredientsUI)
 		{
 			Destroy(item.gameObject);
 		}
 		ingredientsUI.Clear();
 		recipeAnimator.SetTrigger("Close");
 		SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
-		index = 0;
+		index = 0;*/
 	}
 
 	void DestroyAllItems ()
@@ -156,27 +149,20 @@ public class CauldronManager : MonoBehaviour
 
 	public IEnumerator MoveCauldron (Vector3 targetPos)
 	{
-		//Debug.Log("Moving Initialized");
-		//Debug.Log("Target Pos : " + targetPos);
-		//Debug.Log("TransformPos : " + transform.position);
 		do
 		{
-			//Debug.Log("TransformPos : " + transform.position);
-			//Debug.Log("Moving Cauldron");
 			Vector3 dir = targetPos - transform.position;
 			dir.y = 0f;
 			transform.Translate(dir * 500f * Time.deltaTime);
 			yield return null;
 		}
 		while (Vector3.Distance(transform.position, targetPos) > 0.1f);
-		//Debug.Log("Moving Over");
 
 		StartCoroutine(NewBatch());
 	}
 
 	public IEnumerator NewBatch ()
 	{
-		//Debug.Log("New Batch !");
 		DestroyAllItems();
 		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
 		spawner.SpawnIngredients();
