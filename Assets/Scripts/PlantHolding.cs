@@ -57,7 +57,8 @@ public class PlantHolding : MonoBehaviour
         {
             if (animator.gameObject.activeSelf)
             {
-                animator.SetTrigger("Take");
+				Debug.Log("Set Trigger");
+				animator.SetTrigger("Take");
             }
         }
     }
@@ -68,6 +69,7 @@ public class PlantHolding : MonoBehaviour
 		{
 			if (animator.gameObject.activeSelf)
 			{
+
 				animator.ResetTrigger("Take");
 				animator.Play("IdleHands");
 			}
