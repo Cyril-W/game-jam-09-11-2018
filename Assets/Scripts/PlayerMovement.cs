@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Movement Modifications")]
 	public float speedMult = 1f;
 	public float hDirMult = 1f;
-    public float vDirMult = 1f;
-    public bool useInertia;
+	public float vDirMult = 1f;
+	public bool useInertia;
 
     [Header("Change Player Model")]
     public Transform model;
