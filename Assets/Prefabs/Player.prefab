@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 114968126769670734}
   - component: {fileID: 114620982138027154}
   - component: {fileID: 82771486730686330}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1363,7 +1363,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870530391647600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4307350746273748}
@@ -2687,6 +2687,8 @@ MonoBehaviour:
   useInertia: 0
   model: {fileID: 4307350746273748}
   plantHolding: {fileID: 114620982138027154}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  offsetOnRespawn: {x: 0, y: 10, z: 0}
 --- !u!135 &135001130865195388
 SphereCollider:
   m_ObjectHideFlags: 1
