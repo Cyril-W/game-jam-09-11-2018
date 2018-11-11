@@ -77,7 +77,6 @@ public class IngredientSpawner : MonoBehaviour
 		while(Vector3.Distance(testPos, cauldron.position) < minDistanceToCauldron || debug < 50)
 		{
 			testPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
-			Debug.Log("Test position at try " + debug + " : " + testPos);
 			debug++;
 		}
 		return testPos;

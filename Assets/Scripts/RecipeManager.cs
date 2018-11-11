@@ -18,7 +18,13 @@ public class RecipeManager : MonoBehaviour
 
 	public int colorAmount;
 
-	CauldronManager cauldron;
+    [Space]
+
+    [SerializeField] TimerManager timerManager;
+    [SerializeField] float minTimeForRecipe = 20f;
+    [SerializeField] float timeAddedPerIngredient = 5f;
+
+    CauldronManager cauldron;
 	IngredientSpawner ingredientSpawner;
 
 	// Use this for initialization
@@ -34,11 +40,8 @@ public class RecipeManager : MonoBehaviour
 	{
 		currentRecipeSize += recipeSizeIncByLevel;
 		if(loadNewRecipe)
-		{
-			//IngredientSpawner ingSpawner = IngredientSpawner.instance;
-			Debug.Log("Generate new Random Recipe");
+		{    
 			cauldron.SetCauldronRecipe(GenerateRandomRecipe());
-			//cauldron.StartCoroutine(cauldron.MoveCauldron(ingSpawner.GetRandomPointInBounds(ingSpawner.targetsSpawningZone.bounds)));
 		}
 	}
 
@@ -81,15 +84,10 @@ public class RecipeManager : MonoBehaviour
 			}
 		}
 		ingredientSpawner.currentBatch = 0;
-		return recipe;
-	}
 
-	// Update is called once per frame
-	void Update ()
-	{
-		if(Input.GetKeyDown(KeyCode.R))
-		{
-			IncreaseRecipeSize(true);
-		}
+        // set time
+        timerManager.timeBeforeNextRecipe = minTimeForRecipe + timeAddedPerIngredient * recipe.Length; // divide by number of player
+
+        return recipe;
 	}
 }

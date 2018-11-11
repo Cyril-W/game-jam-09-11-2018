@@ -1389,14 +1389,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf69ebcaf14d040bd7d6752252b6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManagement: {fileID: 0}
-  timerManager: {fileID: 0}
-  startTime: 20
-  timeAddedByIngredient: 5
   startRecipeSize: 3
   recipeSizeIncByLevel: 1
   currentRecipeSize: 0
   colorAmount: 4
+  timerManager: {fileID: 0}
+  minTimeForRecipe: 10
+  timeAddedPerIngredient: 5
 --- !u!135 &135636972312180272
 SphereCollider:
   m_ObjectHideFlags: 1

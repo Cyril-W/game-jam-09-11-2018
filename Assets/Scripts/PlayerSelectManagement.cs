@@ -21,7 +21,6 @@ public class PlayerSelectManagement : MonoBehaviour
 	int finalPlayerAmount = 0;
 
 	PlayerManagement playerMgr;
-	// Use this for initialization
 
 	void DisplayCharacter(int index)
 	{
@@ -120,7 +119,7 @@ public class PlayerSelectManagement : MonoBehaviour
 			if(Input.GetButtonDown(vInputs[i]))
 			{
 				DisplayCharacter(i);
-				SwitchCharacterModel(i, Input.GetAxis(hInputs[i]));
+				SwitchCharacterModel(i, Input.GetAxis(vInputs[i]));
 			}
 			if(Input.GetButton(hInputs[i]))
 			{

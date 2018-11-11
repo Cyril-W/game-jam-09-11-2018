@@ -31,8 +31,6 @@ public class CauldronManager : MonoBehaviour
 
 	public void SetCauldronRecipe (PlantEffect.Ingredient[] newRecipe)
 	{
-		Debug.Log("New Recipe Length" + newRecipe.Length);
-
 		if (newRecipe.Length > 0)
 		{
 			recipe = newRecipe;
