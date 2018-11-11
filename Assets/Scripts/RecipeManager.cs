@@ -66,7 +66,7 @@ public class RecipeManager : MonoBehaviour
 		{
 			ingredientSpawner.currentBatch = i;
 			recipe[i] = GenerateRandomIngredient();
-			AddRecipeToDropList(recipe[i], i);
+			AddRecipeToDropList(recipe[i], 0);
 			for(int j = 1; j < ingredientSpawner.ingredientsByBatch; j++)
 			{
 				AddRecipeToDropList(GenerateRandomIngredient(), j);

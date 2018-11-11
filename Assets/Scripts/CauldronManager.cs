@@ -62,7 +62,9 @@ public class CauldronManager : MonoBehaviour
             }
 			else
 			{
-                foreach (var item in ingredientsUI)
+				index = 0;
+
+				foreach (var item in ingredientsUI)
                 {
                     Destroy(item.gameObject);
                 }
