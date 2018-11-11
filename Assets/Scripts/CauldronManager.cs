@@ -10,8 +10,9 @@ public class CauldronManager : MonoBehaviour
     [SerializeField] AudioClip cauldronGood;
     [SerializeField] AudioClip cauldronBad;
     [SerializeField] AudioClip cauldronApplause;
+	[SerializeField] Animator cameraAnimator;
 
-    [Space]
+	[Space]
 
     [SerializeField] Animator recipeAnimator;
     [SerializeField] Transform recipeUI;
@@ -102,6 +103,11 @@ public class CauldronManager : MonoBehaviour
 	
     public void CauldronFailed()
     {
+		if(cameraAnimator != null)
+		{
+			cameraAnimator.SetTrigger("Shake1");
+		}
+
 		Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, explosionMask);
 		foreach(Collider col in players)
 		{
@@ -127,10 +133,22 @@ public class CauldronManager : MonoBehaviour
 	void DestroyAllItems()
 	{
 		PlantEffect[] plants = FindObjectsOfType<PlantEffect>();
+		foreach (PlantEffect plant in plants)
+		{
+			Destroy(plant.gameObject);
+		}
+
+		PlantHolding[] players = FindObjectsOfType<PlantHolding>();
+		foreach (PlantHolding player in players)
+		{
+			player.ResetAnimation();
+			player.currentlyHeldIngredient = null;
+		}
 	}
 
 	public IEnumerator NewBatch()
 	{
+		DestroyAllItems();
 		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
 		spawner.SpawnIngredients();
 		for(int i = 0; i< spawner.ingredientsByBatch; i++)
