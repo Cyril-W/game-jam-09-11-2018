@@ -38,7 +38,6 @@ public class CauldronManager : MonoBehaviour
             for (var i = 0; i < recipe.Length; i++)
             {
                 var ingredient = recipe[i];
-                //Debug.Log("need: " + ingredient.ingredientType + " in " + ingredient.ingredientColor);
                 var newIngredient = Instantiate(ingredientUIPrefab, recipeUI);
                 var newIngredientUI = newIngredient.GetComponent<IngredientUI>();
                 ingredientsUI.Add(newIngredientUI);
@@ -85,7 +84,7 @@ public class CauldronManager : MonoBehaviour
 		}
 		else
 		{
-            CurseManager.instance.CurseAllPlayers(ingredient.curseType);
+            CurseManager.instance.DoomPlayers();
             cauldronAudioSource.PlayOneShot(cauldronBad);
             cauldronAnimator.Play("Sad");
             cauldronParticlesSmoke.Play();

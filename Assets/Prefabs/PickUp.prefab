@@ -2328,6 +2328,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  sphereCollider: {fileID: 135333718933970528}
   glassJar: {fileID: 1999254277558864}
   breakGlassAudioSource: {fileID: 82149228045568376}
   numbersToEmit: 50

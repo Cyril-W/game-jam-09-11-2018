@@ -20,6 +20,7 @@ public class PickupFall : MonoBehaviour {
 
     [Space]
 
+    [SerializeField] SphereCollider sphereCollider;
     [SerializeField] GameObject glassJar;
     [SerializeField] AudioSource breakGlassAudioSource;
     [SerializeField] int numbersToEmit = 30;
@@ -32,6 +33,7 @@ public class PickupFall : MonoBehaviour {
 
     public void SetTargetPos(Vector3 targetPos)
     {
+        sphereCollider.enabled = false;
         target.position = targetPos;
         target.localScale = Vector3.zero;
         target.gameObject.SetActive(true);
@@ -72,5 +74,6 @@ public class PickupFall : MonoBehaviour {
         particlesGlass.Emit(numbersToEmit);
         glassJar.SetActive(false);
         breakGlassAudioSource.PlayOneShot(breakGlassAudioSource.clip);
+        sphereCollider.enabled = true;
     }
 }

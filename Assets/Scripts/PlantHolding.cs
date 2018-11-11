@@ -21,7 +21,7 @@ public class PlantHolding : MonoBehaviour
     [SerializeField] GameObject particleCurseMoveSpeedIncrease;
     [SerializeField] GameObject particleCurseMoveSpeedDecrease;
 
-    int currentPlayerModel = 0;
+    //int currentPlayerModel = 0;
 
     void Update()
     {/*
