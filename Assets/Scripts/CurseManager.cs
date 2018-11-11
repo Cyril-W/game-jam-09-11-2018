@@ -5,7 +5,7 @@ using UnityEngine.PostProcessing;
 public class CurseManager : MonoBehaviour
 {
     public enum CurseType { Slippery, InvertMovementX, InvertMovementY, InvertMovements, MoveSpeedIncrease, MoveSpeedDecrease }
-    public enum DoomType { Greyscale, Red }
+    public enum DoomType { Greyscale, Red, Orthographic, TopDown }
 
     [SerializeField] GameObject curseSlippery;
     [SerializeField] GameObject curseInvertMovementX;
@@ -17,6 +17,7 @@ public class CurseManager : MonoBehaviour
     [Space]
 
     [SerializeField] float secondsToUndoom = 2f;
+    [SerializeField] CameraAnimator cameraAnimator;
     [SerializeField] PostProcessingBehaviour cameraProfile;
     [SerializeField] PostProcessingProfile normalProfile;
     [SerializeField] PostProcessingProfile greyscaleProfile;
@@ -70,6 +71,12 @@ public class CurseManager : MonoBehaviour
             case DoomType.Red:
                 cameraProfile.profile = redProfile;
                 break;
+            case DoomType.Orthographic:
+                cameraAnimator.Doom(doom.ToString());
+                break;
+            case DoomType.TopDown:
+                cameraAnimator.Doom(doom.ToString());
+                break;
             default:
                 break;
         }
@@ -80,6 +87,7 @@ public class CurseManager : MonoBehaviour
     {
         yield return new WaitForSeconds(secondsToUndoom);
         cameraProfile.profile = normalProfile;
+        cameraAnimator.Undoom();
     }
 
 	#region Singleton

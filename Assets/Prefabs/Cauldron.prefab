@@ -573,7 +573,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1650409175029492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4826646997942700}
@@ -1336,7 +1336,7 @@ Light:
     m_NormalBias: 0.4
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
-  m_DrawHalo: 1
+  m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -1367,10 +1367,17 @@ MonoBehaviour:
   cauldronGood: {fileID: 8300000, guid: 132c25ee2f1316e4ba152bec6c977cdd, type: 3}
   cauldronBad: {fileID: 8300000, guid: 37f42cd1597ce8f4aa2df79f66291ef0, type: 3}
   cauldronApplause: {fileID: 8300000, guid: ebe532efe2bdd0545827740af10628aa, type: 3}
+  cameraAnimator: {fileID: 0}
   recipeAnimator: {fileID: 0}
   recipeUI: {fileID: 0}
   ingredientUIPrefab: {fileID: 224587521666807682, guid: 2e078495dc2f1d044a0f0b8090dd3dc5,
     type: 2}
+  explosionRange: 5
+  explosionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  explosionForce: 800
+  upwardsModifier: 1
 --- !u!114 &114503246328817646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1382,6 +1389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf69ebcaf14d040bd7d6752252b6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManagement: {fileID: 0}
+  timerManager: {fileID: 0}
+  startTime: 20
+  timeAddedByIngredient: 5
   startRecipeSize: 3
   recipeSizeIncByLevel: 1
   currentRecipeSize: 0
@@ -5950,10 +5961,10 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551120325985402}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 4
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0

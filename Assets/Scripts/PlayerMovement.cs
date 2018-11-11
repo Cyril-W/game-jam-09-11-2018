@@ -32,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
 		rigid = GetComponent<Rigidbody>();
 	}
 
+    public Vector3 ResetPosition()
+    {
+        return transform.position = spawnPosition + offsetOnRespawn;
+    }
+
 	void Movement ()
 	{
 		float hInputValue = Input.GetAxis(hInput);

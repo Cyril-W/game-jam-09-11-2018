@@ -16,7 +16,7 @@ public class CurseMoveSpeed : CursePlayer {
         }
         else
         {
-            playerMovement.vDirMult = 1/speedMultiplier;
+            playerMovement.speedMult = 1/speedMultiplier;
         }
     }
 

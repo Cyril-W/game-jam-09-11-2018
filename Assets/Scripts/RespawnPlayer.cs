@@ -5,6 +5,8 @@ public class RespawnPlayer : MonoBehaviour {
 
     [SerializeField] float secondsToRespawn = 2f;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] float secondsToDestroyLight = 3f;
+    [SerializeField] GameObject resurrectionLight;
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,7 +22,9 @@ public class RespawnPlayer : MonoBehaviour {
     IEnumerator RespawnPlayerAbove(PlayerMovement playerMovement)
     {
         yield return new WaitForSeconds(secondsToRespawn);
-        playerMovement.transform.position = new Vector3(-10, 10, 0);
+        var newPosition = playerMovement.ResetPosition();
+        var newLight = Instantiate(resurrectionLight, newPosition, Quaternion.identity);
+        Destroy(newLight, secondsToDestroyLight);
         playerMovement.enabled = true;
     }
 }

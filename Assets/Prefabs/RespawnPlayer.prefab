@@ -162,3 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsToRespawn: 2
   audioSource: {fileID: 82950679955990620}
+  secondsToDestroyLight: 3
+  resurrectionLight: {fileID: 1469907559265608, guid: 3de79f936e24b8243841e2475c171bfe,
+    type: 2}

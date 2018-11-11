@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour {
@@ -11,7 +11,7 @@ public class TimerManager : MonoBehaviour {
     [SerializeField] Transform hourglass;
     [SerializeField] Image hourglassUp;
     [SerializeField] Image hourglassDown;
-    [SerializeField] float timeToFlipHourglass = 0.1f;
+    //[SerializeField] float timeToFlipHourglass = 0.1f;
 
     private void OnEnable()
     {
@@ -25,7 +25,7 @@ public class TimerManager : MonoBehaviour {
         {
             //StartCoroutine(FlipHourGlass());
             time = 0f;
-            cauldronManager.CauldronFailed();
+            SceneManager.LoadScene("LostScene");
         }
         UpdateFillAmounts();
     }
@@ -36,7 +36,7 @@ public class TimerManager : MonoBehaviour {
         hourglassDown.fillAmount = time / timeBeforeNextRecipe;
     }
 
-    IEnumerator FlipHourGlass()
+    /*IEnumerator FlipHourGlass()
     {
         var initialRot = hourglass.localRotation;
         var finalRot = Quaternion.AngleAxis(180f, Vector3.forward) * initialRot;
@@ -51,5 +51,5 @@ public class TimerManager : MonoBehaviour {
 
         hourglassUp.transform.localRotation *= Quaternion.AngleAxis(180f, Vector3.forward);
         hourglassDown.transform.localRotation *= Quaternion.AngleAxis(180f, Vector3.forward);
-    }
+    }*/
 }
