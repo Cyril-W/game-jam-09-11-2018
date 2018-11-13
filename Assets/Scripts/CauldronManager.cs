@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CauldronManager : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class CauldronManager : MonoBehaviour
 	[SerializeField] AudioClip cauldronBad;
 	[SerializeField] AudioClip cauldronApplause;
 	[SerializeField] CameraAnimator cameraAnimator;
+    [SerializeField] Text textScore;
 
-	[Space]
+    [Space]
 
 	[SerializeField] Animator recipeAnimator;
 	[SerializeField] Transform recipeUI;
@@ -23,8 +25,7 @@ public class CauldronManager : MonoBehaviour
 	[SerializeField] float explosionForce = 500f;
 	[SerializeField] float upwardsModifier = 3f;
 
-
-
+    int score = 0;
 	int index = 0;
 	PlantEffect.Ingredient[] recipe;
 	List<IngredientUI> ingredientsUI = new List<IngredientUI>();
@@ -44,7 +45,7 @@ public class CauldronManager : MonoBehaviour
 				newIngredientUI.DisplayIngredient(ingredient);
 				if (i == 0)
 				{
-					newIngredientUI.ToggleSelected();
+				    newIngredientUI.ToggleSelected();
 				}
 			}
 
@@ -70,7 +71,6 @@ public class CauldronManager : MonoBehaviour
 			else
 			{
 				index = 0;
-
 				foreach (var item in ingredientsUI)
 				{
 					Destroy(item.gameObject);
@@ -78,10 +78,12 @@ public class CauldronManager : MonoBehaviour
 				ingredientsUI.Clear();
 				recipeAnimator.SetTrigger("Close");
 				cauldronAudioSource.PlayOneShot(cauldronApplause);
+                score++;
+                UpdateScore();
 				RecipeManager.instance.IncreaseRecipeSize(true);
 			}
-
-		}
+            StartCoroutine(NewBatch());
+        }
 		else
 		{
 			CurseManager.instance.DoomPlayers();
@@ -91,8 +93,17 @@ public class CauldronManager : MonoBehaviour
 
 			CauldronFailed();
 		}
-		StartCoroutine(NewBatch());
 	}
+
+    void UpdateScore()
+    {
+        textScore.text = score.ToString();
+        PlayerPrefs.SetInt("score", score);
+        if (!PlayerPrefs.HasKey("highestScore") || score > PlayerPrefs.GetInt("highestScore"))
+        {
+            PlayerPrefs.SetInt("highestScore", score);
+        }
+    }
 
 	public IEnumerator DisablePlayerMovement (PlayerMovement player)
 	{
@@ -119,15 +130,6 @@ public class CauldronManager : MonoBehaviour
 				rigid.AddExplosionForce(explosionForce, transform.position, explosionRange, upwardsModifier);
 			}
 		}
-
-		/*foreach (var item in ingredientsUI)
-		{
-			Destroy(item.gameObject);
-		}
-		ingredientsUI.Clear();
-		recipeAnimator.SetTrigger("Close");
-		SetCauldronRecipe(RecipeManager.instance.GenerateRandomRecipe());
-		index = 0;*/
 	}
 
 	void DestroyAllItems ()

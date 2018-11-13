@@ -19,13 +19,24 @@ public class PlayerSelectManagement : MonoBehaviour
 	GameObject[] spawnedCharacters = new GameObject[4];
 	public Transform[] slots = new Transform[4];
 
-	public GameObject startButton;
-	bool[] selectedPlayers = {false, false, false, false};
+	public Button startButton;
+
+    [SerializeField] Text instructions;
+    [SerializeField] string startInstructions = "Press any key";
+    [SerializeField] string playInstructions = "Press enter";
+
+    bool[] selectedPlayers = {false, false, false, false};
 	int[] modelIndexes = { 0, 1, 2, 3 };
 	int playerAmount;
 	int finalPlayerAmount = 0;
+    bool settingsOpen = false;
 
 	PlayerManagement playerMgr;
+
+    public void ToggleSettingsOpen()
+    {
+        settingsOpen = !settingsOpen;
+    }
 
 	void DisplayCharacter(int index)
 	{
@@ -83,10 +94,11 @@ public class PlayerSelectManagement : MonoBehaviour
 
 	void StartGameButton(bool available)
 	{
-		if(startButton.activeSelf == !available)
+		if(startButton.interactable == !available)
 		{
-			startButton.SetActive(available);
-		}
+			startButton.interactable = available;
+            instructions.text = available ? playInstructions : startInstructions;
+        }
 	}
 
 	public void StartGame()
@@ -124,11 +136,16 @@ public class PlayerSelectManagement : MonoBehaviour
 	void Start ()
 	{
 		playerMgr = FindObjectOfType<PlayerManagement>();
-	}
+        StartGameButton(false);
+    }
 	
-	// Update is called once per frame
 	void Update ()
 	{
+        if (settingsOpen)
+        {
+            return;
+        }
+
 		for(int i = 0; i<hInputs.Length; i++)
 		{
 			if(Input.GetButtonDown(vInputs[i]))
@@ -144,8 +161,12 @@ public class PlayerSelectManagement : MonoBehaviour
 		}
 		if(playerAmount > 0)
 		{
-			StartGameButton(true);
-		}
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                StartGame();
+            }
+            StartGameButton(true);
+        }
 		else
 		{
 			StartGameButton(false);

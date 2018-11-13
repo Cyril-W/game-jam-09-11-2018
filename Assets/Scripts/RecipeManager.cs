@@ -21,13 +21,14 @@ public class RecipeManager : MonoBehaviour
     [Space]
 
     [SerializeField] TimerManager timerManager;
-    [SerializeField] float minTimeForRecipe = 20f;
-    [SerializeField] float timeAddedPerIngredient = 5f;
+    [SerializeField] string recipeTime = "recipeTime";
+    [SerializeField] string ingredientTime = "ingredientTime";
+    [SerializeField] float defaultRecipeTime = 20f;
+    [SerializeField] float defaultIngredientTime = 5f;
 
     CauldronManager cauldron;
 	IngredientSpawner ingredientSpawner;
 
-	// Use this for initialization
 	void Start ()
 	{
 		currentRecipeSize = startRecipeSize;
@@ -85,8 +86,10 @@ public class RecipeManager : MonoBehaviour
 		}
 		ingredientSpawner.currentBatch = 0;
 
-        // set time
-        timerManager.timeBeforeNextRecipe = minTimeForRecipe + timeAddedPerIngredient * recipe.Length; // divide by number of player
+        var timePerRecipe = PlayerPrefs.HasKey(recipeTime) ? PlayerPrefs.GetFloat(recipeTime) : defaultRecipeTime;
+        var timePerIngredient = PlayerPrefs.HasKey(ingredientTime) ? PlayerPrefs.GetFloat(ingredientTime) : defaultIngredientTime;
+        var newTime = timePerRecipe + timePerIngredient * recipe.Length; // divide by number of player
+        timerManager.SetNewTime(newTime); 
 
         return recipe;
 	}

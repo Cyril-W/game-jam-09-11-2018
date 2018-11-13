@@ -15,13 +15,14 @@ public class PlantEffect : MonoBehaviour
 	}
     	
 	public Vector3 offsetFromPlayer = new Vector3(0f, 3f, 0f);
+    public Animator animator;
 
     [Space]
 
     [SerializeField] GameObject[] rats;
     [SerializeField] GameObject[] frogs;
     [SerializeField] GameObject[] legs;
-    [SerializeField] GameObject[] dolls;
+    [SerializeField] GameObject[] dolls; 
 
     Ingredient ingredient;
     CauldronManager cauldron;
@@ -68,9 +69,10 @@ public class PlantEffect : MonoBehaviour
 	public void OnPlantCollect(GameObject player)
 	{
 		CurseManager.instance.CursePlayer(player, ingredient.curseType);
-		transform.parent = player.transform;
+        var oldParent = transform.parent;
+        transform.parent = player.transform;        
 		transform.localPosition = offsetFromPlayer;
-	}
+    }
 
 	public void OnPlantDropInCauldron (GameObject player)
 	{

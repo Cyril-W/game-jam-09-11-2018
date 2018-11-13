@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour {
-
-    public float time = 0f;
-    public float timeBeforeNextRecipe = 5f;
-
     [SerializeField] CauldronManager cauldronManager;
     [SerializeField] Transform hourglass;
     [SerializeField] Image hourglassUp;
     [SerializeField] Image hourglassDown;
-    //[SerializeField] float timeToFlipHourglass = 0.1f;
+    [SerializeField] float timeToFlipHourglass = 0.1f;
+    [SerializeField] AudioSource audioSource;
 
-    private void OnEnable()
+    float time = 0f;
+    float timeBeforeNextRecipe = 10000f;
+
+    void OnEnable()
     {
         time = 0f;
         UpdateFillAmounts();
@@ -23,9 +24,12 @@ public class TimerManager : MonoBehaviour {
         time += Time.deltaTime;
         if (time > timeBeforeNextRecipe)
         {
-            //StartCoroutine(FlipHourGlass());
             time = 0f;
             SceneManager.LoadScene("LostScene");
+        }
+        else if (time >= timeBeforeNextRecipe - audioSource.clip.length && !audioSource.isPlaying)
+        {
+            audioSource.Play();
         }
         UpdateFillAmounts();
     }
@@ -36,7 +40,14 @@ public class TimerManager : MonoBehaviour {
         hourglassDown.fillAmount = time / timeBeforeNextRecipe;
     }
 
-    /*IEnumerator FlipHourGlass()
+    public void SetNewTime(float newTime)
+    {
+        timeBeforeNextRecipe = newTime;
+        time = 0f;
+        StartCoroutine(CoroutineFlipHourGlass());
+    }
+
+    IEnumerator CoroutineFlipHourGlass()
     {
         var initialRot = hourglass.localRotation;
         var finalRot = Quaternion.AngleAxis(180f, Vector3.forward) * initialRot;
@@ -51,5 +62,5 @@ public class TimerManager : MonoBehaviour {
 
         hourglassUp.transform.localRotation *= Quaternion.AngleAxis(180f, Vector3.forward);
         hourglassDown.transform.localRotation *= Quaternion.AngleAxis(180f, Vector3.forward);
-    }*/
+    }
 }

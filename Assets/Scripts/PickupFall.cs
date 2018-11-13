@@ -73,7 +73,16 @@ public class PickupFall : MonoBehaviour {
         target.gameObject.SetActive(false);
         particlesGlass.Emit(numbersToEmit);
         glassJar.SetActive(false);
-        breakGlassAudioSource.PlayOneShot(breakGlassAudioSource.clip);
         sphereCollider.enabled = true;
+        breakGlassAudioSource.PlayOneShot(breakGlassAudioSource.clip);
+        yield return new WaitForSeconds(breakGlassAudioSource.clip.length);
+
+        // unparent
+        var oldParent = pickUp.parent;
+        pickUp.parent = null;
+        if (oldParent != null)
+        {
+            Destroy(oldParent.gameObject);
+        }
     }
 }
