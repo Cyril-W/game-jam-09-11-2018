@@ -19,10 +19,23 @@ public class SettingsManager : MonoBehaviour {
     [SerializeField] Text warningTextIngredient;
     [SerializeField] string warningString = "Not a number!";
 
-    private void Start()
+    void Start()
     {
         inputFieldRecipe.text = PlayerPrefs.HasKey(recipeTime) ? PlayerPrefs.GetFloat(recipeTime).ToString() : "";
         inputFieldIngredient.text = PlayerPrefs.HasKey(ingredientTime) ? PlayerPrefs.GetFloat(ingredientTime).ToString() : "";
+    }
+
+    void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            QuitApplication();
+        }
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 
     public void ToggleSettings()

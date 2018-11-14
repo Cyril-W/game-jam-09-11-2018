@@ -25,6 +25,8 @@ public class CauldronManager : MonoBehaviour
 	[SerializeField] float explosionForce = 500f;
 	[SerializeField] float upwardsModifier = 3f;
 
+    [SerializeField] float secondsBetweenSpawn = 0.1f;
+
     int score = 0;
 	int index = 0;
 	PlantEffect.Ingredient[] recipe;
@@ -32,7 +34,8 @@ public class CauldronManager : MonoBehaviour
 
 	public void SetCauldronRecipe (PlantEffect.Ingredient[] newRecipe)
 	{
-		if (newRecipe.Length > 0)
+        DestroyAllItems();
+        if (newRecipe.Length > 0)
 		{
 			recipe = newRecipe;
 
@@ -51,7 +54,8 @@ public class CauldronManager : MonoBehaviour
 
 			recipeAnimator.SetTrigger("Open");
 		}
-	}
+        StartCoroutine(NewBatchs());
+    }
 
 	//Check if plant is similar to the one we put inside the cauldron, and cast a curse otherwise
 	public void CheckPlant (PlantEffect.Ingredient ingredient)
@@ -81,8 +85,7 @@ public class CauldronManager : MonoBehaviour
                 score++;
                 UpdateScore();
 				RecipeManager.instance.IncreaseRecipeSize(true);
-			}
-            StartCoroutine(NewBatch());
+			}            
         }
 		else
 		{
@@ -90,7 +93,6 @@ public class CauldronManager : MonoBehaviour
 			cauldronAudioSource.PlayOneShot(cauldronBad);
 			cauldronAnimator.Play("Sad");
 			cauldronParticlesSmoke.Play();
-
 			CauldronFailed();
 		}
 	}
@@ -149,7 +151,7 @@ public class CauldronManager : MonoBehaviour
 		}
 	}
 
-	public IEnumerator MoveCauldron (Vector3 targetPos)
+	/*public IEnumerator MoveCauldron (Vector3 targetPos)
 	{
 		do
 		{
@@ -160,19 +162,23 @@ public class CauldronManager : MonoBehaviour
 		}
 		while (Vector3.Distance(transform.position, targetPos) > 0.1f);
 
-		StartCoroutine(NewBatch());
-	}
+		StartCoroutine(NewBatchs());
+	}*/
 
-	public IEnumerator NewBatch ()
+	public IEnumerator NewBatchs ()
 	{
-		DestroyAllItems();
-		IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
-		spawner.SpawnIngredients();
-		for (int i = 0; i < spawner.ingredientsByBatch; i++)
-		{
-			spawner.ThrowPickup();
-			yield return new WaitForSeconds(0.1f);
-
-		}
+        Debug.Log("new batch");
+        var secondsBetweenBatch = TimerManager.instance.GetTime() / recipe.Length;
+        for (int i = 0; i < recipe.Length; i++)
+        {
+            IngredientSpawner spawner = FindObjectOfType<IngredientSpawner>();
+            spawner.SpawnIngredients();
+            for (int j = 0; j < spawner.ingredientsByBatch; j++)
+            {
+                spawner.ThrowPickup();
+                yield return new WaitForSeconds(secondsBetweenSpawn);
+            }
+            yield return new WaitForSeconds(secondsBetweenBatch);
+        }
 	}
 }

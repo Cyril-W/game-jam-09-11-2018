@@ -20,7 +20,6 @@ public class RecipeManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] TimerManager timerManager;
     [SerializeField] string recipeTime = "recipeTime";
     [SerializeField] string ingredientTime = "ingredientTime";
     [SerializeField] float defaultRecipeTime = 20f;
@@ -34,7 +33,6 @@ public class RecipeManager : MonoBehaviour
 		currentRecipeSize = startRecipeSize;
 		cauldron = FindObjectOfType<CauldronManager>();
 		cauldron.SetCauldronRecipe(GenerateRandomRecipe());
-		cauldron.StartCoroutine(cauldron.NewBatch());
 	}
 
 	public void IncreaseRecipeSize (bool loadNewRecipe)
@@ -89,7 +87,7 @@ public class RecipeManager : MonoBehaviour
         var timePerRecipe = PlayerPrefs.HasKey(recipeTime) ? PlayerPrefs.GetFloat(recipeTime) : defaultRecipeTime;
         var timePerIngredient = PlayerPrefs.HasKey(ingredientTime) ? PlayerPrefs.GetFloat(ingredientTime) : defaultIngredientTime;
         var newTime = timePerRecipe + timePerIngredient * recipe.Length; // divide by number of player
-        timerManager.SetNewTime(newTime); 
+        TimerManager.instance.SetNewTime(newTime); 
 
         return recipe;
 	}

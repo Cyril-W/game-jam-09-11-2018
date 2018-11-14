@@ -21,16 +21,15 @@ public class IngredientSpawner : MonoBehaviour
     public float posZPickup;
     public List<float> posYPickup;
 
-    public float minDistanceToCauldron = 4f;
-	public float minDistanceToPickups = 1f;
+    public Vector3 defaultSpawnPos = new Vector3(0, 0, -10);
 
     public Collider targetsSpawningZone;
+    public Collider cauldronForbiddenZone;
     public Transform cauldron;
 
 	List<PickupFall> pickupFalls = new List<PickupFall>();
 	int batchAmount = 0;
 
-	// Use this for initialization
 	void Start ()
 	{
 		if(cauldron == null)
@@ -73,13 +72,22 @@ public class IngredientSpawner : MonoBehaviour
 	public Vector3 GetSpawnPosFarFromCauldron()
 	{
 		int debug = 0;
-		Vector3 testPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
-		while(Vector3.Distance(testPos, cauldron.position) < minDistanceToCauldron || debug < 50)
+        Vector3 spawnPos;
+        do	
 		{
-			testPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
+            spawnPos = GetRandomPointInBounds(targetsSpawningZone.bounds);
 			debug++;
 		}
-		return testPos;
+        while (IsPointInBounds(spawnPos, cauldronForbiddenZone.bounds) && debug < 50) ;
+
+        if (debug >= 50)
+        {
+            return defaultSpawnPos;
+        }
+        else
+        {
+            return spawnPos;
+        }
 	}
 
     public Vector3 GetRandomPointInBounds(Bounds bounds)
@@ -89,6 +97,13 @@ public class IngredientSpawner : MonoBehaviour
             Random.Range(bounds.min.y, bounds.max.y),
             Random.Range(bounds.min.z, bounds.max.z)
         );
+    }
+
+    public bool IsPointInBounds(Vector3 point, Bounds bounds)
+    {
+        return (point.x >= bounds.min.x && point.x <= bounds.max.x) 
+            && (point.y >= bounds.min.y && point.y <= bounds.max.y)
+            && (point.z >= bounds.min.z && point.z <= bounds.max.z);
     }
 
     public void InitIngredientLists (int recipeSize)
@@ -136,19 +151,4 @@ public class IngredientSpawner : MonoBehaviour
             pickupFalls.RemoveAt(random);
         }
     }
-
-	// Update is called once per frame
-	void Update ()
-	{
-		if (Input.GetKeyDown(KeyCode.A))
-		{
-			if (currentBatch < batchAmount)
-			{
-				SpawnIngredients();
-			}
-		} else if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ThrowPickup();
-        }
-	}
 }

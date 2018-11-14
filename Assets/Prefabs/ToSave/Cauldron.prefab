@@ -154,6 +154,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1325682423619708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4747898979497342}
+  - component: {fileID: 65245702042317844}
+  m_Layer: 0
+  m_Name: ColliderForbiddenZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1343451345485184
 GameObject:
   m_ObjectHideFlags: 1
@@ -703,6 +719,19 @@ Transform:
   m_Father: {fileID: 4406795946179404}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4747898979497342
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325682423619708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4826646997942700}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4768693128993312
 Transform:
   m_ObjectHideFlags: 1
@@ -781,6 +810,7 @@ Transform:
   - {fileID: 4224490785089048}
   - {fileID: 4640179806443356}
   - {fileID: 4913519744999034}
+  - {fileID: 4747898979497342}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1229,6 +1259,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244349332211354}
   m_Mesh: {fileID: 4300000, guid: 17de414787477814c997b2f99315ecc1, type: 3}
+--- !u!65 &65245702042317844
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325682423619708}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7, y: 0, z: 7}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!82 &82375629503979694
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1466,6 +1508,7 @@ MonoBehaviour:
     m_Bits: 512
   explosionForce: 800
   upwardsModifier: 1
+  secondsBetweenSpawn: 0.1
 --- !u!114 &114503246328817646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1481,9 +1524,10 @@ MonoBehaviour:
   recipeSizeIncByLevel: 1
   currentRecipeSize: 0
   colorAmount: 4
-  timerManager: {fileID: 0}
-  minTimeForRecipe: 10
-  timeAddedPerIngredient: 5
+  recipeTime: recipeTime
+  ingredientTime: ingredientTime
+  defaultRecipeTime: 20
+  defaultIngredientTime: 5
 --- !u!135 &135636972312180272
 SphereCollider:
   m_ObjectHideFlags: 1

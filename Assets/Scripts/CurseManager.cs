@@ -52,10 +52,13 @@ public class CurseManager : MonoBehaviour
 
 	public void UnCursePlayer (GameObject player)
 	{
-        var curses = GameObject.FindGameObjectsWithTag("Curse");
-        foreach (GameObject curse in curses)
+        var playerTransform = player.transform;
+        foreach (Transform child in playerTransform)
         {
-            Destroy(curse);
+            if (child.CompareTag("Curse"))
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 

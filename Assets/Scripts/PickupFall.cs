@@ -46,6 +46,11 @@ public class PickupFall : MonoBehaviour {
 
     IEnumerator Fall()
     {
+        if (pickUp == null)
+        {
+            yield return null;
+        }
+
         // paramters for pickUp position
         var initialPos = pickUp.localPosition;
         var finalPos = target.localPosition;
@@ -73,16 +78,16 @@ public class PickupFall : MonoBehaviour {
         target.gameObject.SetActive(false);
         particlesGlass.Emit(numbersToEmit);
         glassJar.SetActive(false);
-        sphereCollider.enabled = true;
         breakGlassAudioSource.PlayOneShot(breakGlassAudioSource.clip);
         yield return new WaitForSeconds(breakGlassAudioSource.clip.length);
+        sphereCollider.enabled = true;
 
         // unparent
         var oldParent = pickUp.parent;
         pickUp.parent = null;
         if (oldParent != null)
         {
-            Destroy(oldParent.gameObject);
+            Destroy(oldParent.gameObject, 1f);
         }
     }
 }

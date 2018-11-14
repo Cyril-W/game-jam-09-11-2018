@@ -4,6 +4,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour {
+    #region Singleton
+    public static TimerManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+    #endregion
+
     [SerializeField] CauldronManager cauldronManager;
     [SerializeField] Transform hourglass;
     [SerializeField] Image hourglassUp;
@@ -45,6 +53,11 @@ public class TimerManager : MonoBehaviour {
         timeBeforeNextRecipe = newTime;
         time = 0f;
         StartCoroutine(CoroutineFlipHourGlass());
+    }
+
+    public float GetTime()
+    {
+        return timeBeforeNextRecipe;
     }
 
     IEnumerator CoroutineFlipHourGlass()

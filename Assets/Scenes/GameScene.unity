@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6926,9 +6926,9 @@ MonoBehaviour:
   posZPickup: 17.5
   posYPickup:
   - 5.5
-  minDistanceToCauldron: 2
-  minDistanceToPickups: 1
+  defaultSpawnPos: {x: 0, y: 0, z: -10}
   targetsSpawningZone: {fileID: 563824634}
+  cauldronForbiddenZone: {fileID: 1359372102}
   cauldron: {fileID: 1984432982}
 --- !u!65 &563824634
 BoxCollider:
@@ -11813,11 +11813,6 @@ Prefab:
     m_Modifications:
     - target: {fileID: 224248509317349018, guid: 95e3c1d4e155cbf4ab8a77b3dc26adfe,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 224248509317349018, guid: 95e3c1d4e155cbf4ab8a77b3dc26adfe,
-        type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -13476,7 +13471,7 @@ GameObject:
   - component: {fileID: 1143307071}
   - component: {fileID: 1143307070}
   m_Layer: 0
-  m_Name: TimeManager
+  m_Name: TimerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16470,11 +16465,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114503246328817646, guid: f97fdb58dfb20d942ac532b7e3f24832,
-        type: 2}
-      propertyPath: timerManager
-      value: 
-      objectReference: {fileID: 1143307070}
     - target: {fileID: 114192354169268884, guid: f97fdb58dfb20d942ac532b7e3f24832,
         type: 2}
       propertyPath: cameraAnimator
@@ -16495,14 +16485,18 @@ Prefab:
       propertyPath: recipeUI
       value: 
       objectReference: {fileID: 1888236429}
-    - target: {fileID: 114503246328817646, guid: f97fdb58dfb20d942ac532b7e3f24832,
-        type: 2}
-      propertyPath: minTimeForRecipe
-      value: 20
+    - target: {fileID: 1325682423619708, guid: f97fdb58dfb20d942ac532b7e3f24832, type: 2}
+      propertyPath: m_Name
+      value: CauldronForbiddenZone
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f97fdb58dfb20d942ac532b7e3f24832, type: 2}
   m_IsPrefabAsset: 0
+--- !u!65 &1359372102 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 65245702042317844, guid: f97fdb58dfb20d942ac532b7e3f24832,
+    type: 2}
+  m_PrefabInternal: {fileID: 1359372101}
 --- !u!1 &1368578698
 GameObject:
   m_ObjectHideFlags: 0

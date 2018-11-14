@@ -2459,8 +2459,8 @@ MonoBehaviour:
   moveSpeed: 5
   acceleration: 500
   maxSqrVelocity: 5
-  hInput: Horizontal4
-  vInput: Vertical4
+  hInput: Horizontal1
+  vInput: Vertical1
   speedMult: 1
   hDirMult: 1
   vDirMult: 1
